@@ -12,17 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Globetrotters"
         tools:targetApi="31">
+
+        <!-- Splash Screen -->
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.Globetrotters.Splash"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Globetrotters">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/Theme.Globetrotters" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
