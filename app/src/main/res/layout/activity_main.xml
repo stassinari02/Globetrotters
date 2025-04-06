@@ -1,0 +1,48 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_mountain"
+    android:padding="@dimen/page_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textSize="@dimen/SuperTitle"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/title_marginStart"
+        android:layout_marginTop="@dimen/title_marginTop"
+        android:layout_weight="1"
+        android:text="@string/title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/title_size"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/addTravelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nuovo Viaggio"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:nestedScrollingEnabled="false"
+        android:paddingTop="@dimen/recyclerView_paddingTop"
+        android:contentDescription="@string/recyclerView_description"/>
+
+</LinearLayout>

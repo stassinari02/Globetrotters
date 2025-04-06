@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="page_padding">16dp</dimen>
+    <dimen name="SuperTitle">30sp</dimen>
+
+    <dimen name="title_marginStart">30dp</dimen>
+    <dimen name="title_marginTop">120dp</dimen>
+    <dimen name="title_size">42sp</dimen>
+
+    <dimen name="recyclerView_paddingTop">16dp</dimen>
+
+    <dimen name="cards_marginStartEnd">40dp</dimen>
+    <dimen name="cards_cornerRadius">16dp</dimen>
+    <dimen name="cards_padding">8dp</dimen>
+    <dimen name="cards_marginTop">10dp</dimen>
+
+    <dimen name="tripTitle_textsize">16sp</dimen>
+    <dimen name="tripDates_textsize">14sp</dimen>
+</resources>

@@ -1,6 +1,7 @@
 <resources>
-    <style name="Theme.Globetrotters" parent="android:Theme.Material.Light.NoActionBar">
-    </style>
+    <style name="Theme.Globetrotters" parent="Theme.AppCompat.Light.NoActionBar">
+
+</style>
 
     <style name="Theme.Globetrotters.Splash" parent="android:Theme.Light.NoTitleBar.Fullscreen">
         <item name="android:windowBackground">@drawable/splash_screen</item>
