@@ -4,7 +4,7 @@
     <dimen name="SuperTitle">30sp</dimen>
 
     <dimen name="title_marginStart">30dp</dimen>
-    <dimen name="title_marginTop">120dp</dimen>
+    <dimen name="title_marginTop">85dp</dimen>
     <dimen name="title_size">42sp</dimen>
 
     <dimen name="recyclerView_paddingTop">16dp</dimen>

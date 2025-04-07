@@ -17,6 +17,25 @@
             android:paddingVertical="12dp"
             android:hint="Scegli un titolo per la vacanza" />
 
+        <ImageView
+            android:id="@+id/photoPreview"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@android:color/darker_gray"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/image_border"
+            android:contentDescription="Anteprima foto" />
+
+        <Button
+            android:id="@+id/takePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scatta Foto"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp" />
+
         <DatePicker
             android:id="@+id/startDatePicker"
             android:layout_width="match_parent"
@@ -40,6 +59,7 @@
             android:visibility="gone"
             android:paddingTop="8dp"
             android:textAlignment="center" />
+
 
         <Button
             android:id="@+id/createButton"

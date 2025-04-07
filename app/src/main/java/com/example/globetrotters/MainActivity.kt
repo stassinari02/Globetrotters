@@ -22,13 +22,19 @@ import com.example.globetrotters.models.TravelItem
 import android.app.AlertDialog
 import android.provider.Settings
 import android.net.Uri
+import androidx.core.content.FileProvider
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TravelAdapter
+    private var photoUri: Uri? = null
+    private val CAMERA_REQUEST_CODE = 101
     private val travelList = mutableListOf<TravelItem>()
     private val PERMISSIONS_REQUEST_CODE = 100
+    var currentPhotoUri: Uri? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,10 +71,32 @@ class MainActivity : AppCompatActivity() {
         val endDatePicker = dialogView.findViewById<DatePicker>(R.id.endDatePicker)
         val createButton = dialogView.findViewById<Button>(R.id.createButton)
         val errorMessage = dialogView.findViewById<TextView>(R.id.errorMessage)
+        val takePhotoButton = dialogView.findViewById<Button>(R.id.takePhotoButton)
+        val photoPreview = dialogView.findViewById<ImageView>(R.id.photoPreview)
 
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
+
+        takePhotoButton.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                val photoFile = File.createTempFile("travel_photo_", ".jpg", cacheDir)
+
+                // Usa FileProvider per ottenere un URI sicuro
+                currentPhotoUri = FileProvider.getUriForFile(
+                    this,
+                    "com.example.globetrotters.provider",  // Devi usare lo stesso nome
+                    photoFile
+                )
+
+
+                intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, currentPhotoUri)
+                startActivityForResult(intent, CAMERA_REQUEST_CODE)
+            } else {
+                Toast.makeText(this, "Permesso fotocamera non concesso", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Imposta la data minima iniziale per endDatePicker (uguale a startDatePicker)
         val startCalendarInit = java.util.Calendar.getInstance().apply {
@@ -86,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         createButton.setOnClickListener {
+
             val title = titleEditText.text.toString().trim()
 
             val startCalendar = java.util.Calendar.getInstance().apply {
@@ -106,7 +135,7 @@ class MainActivity : AppCompatActivity() {
                 val startDate = "${startDatePicker.dayOfMonth}/${startDatePicker.month + 1}/${startDatePicker.year}"
                 val endDate = "${endDatePicker.dayOfMonth}/${endDatePicker.month + 1}/${endDatePicker.year}"
 
-                val travelItem = TravelItem(title, "$startDate - $endDate")
+                val travelItem = TravelItem(title, "$startDate - $endDate", currentPhotoUri?.toString())
                 adapter.addItem(travelItem)
                 dialog.dismiss()
             }
@@ -143,6 +172,22 @@ class MainActivity : AppCompatActivity() {
                 val uri = Uri.fromParts("package", packageName, null)
                 intent.data = uri
                 startActivity(intent)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+            currentPhotoUri?.let { uri ->
+                // Mostra un toast per testare
+                Toast.makeText(this, "Foto salvata: $uri", Toast.LENGTH_SHORT).show()
+
+                // Se vuoi aggiornare direttamente l'anteprima, puoi farlo nel dialog
+                val dialogView = layoutInflater.inflate(R.layout.dialog_add_travel, null)
+                val preview = dialogView.findViewById<ImageView>(R.id.photoPreview)
+                preview?.setImageURI(uri)
             }
         }
     }

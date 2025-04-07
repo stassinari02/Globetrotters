@@ -6,9 +6,11 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
 import android.graphics.Typeface
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.globetrotters.R
@@ -39,6 +41,14 @@ class TravelAdapter(private val travelList: MutableList<TravelItem>) :
         val travel = travelList[position]
         holder.titleText.text = travel.title
         holder.dateText.text = travel.dateRange
+
+        val imageView = holder.itemView.findViewById<ImageView>(R.id.travelImage)
+        if (!travel.photoUri.isNullOrEmpty()) {
+            imageView.setImageURI(Uri.parse(travel.photoUri))
+        } else {
+            imageView.setImageResource(android.R.color.darker_gray) // Placeholder
+        }
+
     }
 
     override fun getItemCount(): Int = travelList.size

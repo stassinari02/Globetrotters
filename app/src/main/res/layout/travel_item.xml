@@ -15,20 +15,16 @@
         android:padding="@dimen/cards_padding"
         android:background="@color/white">
 
-        <!-- Quadrato nero per l'immagine, sarà da cambiare con una imageview -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            android:layout_marginEnd="16dp">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/black" />
-        </androidx.cardview.widget.CardView>
-
+        <!-- ImageView con dimensioni fisse e bordi arrotondati -->
+        <ImageView
+            android:id="@+id/travelImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@android:color/darker_gray"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_image_background" />
 
         <LinearLayout
             android:layout_width="wrap_content"
