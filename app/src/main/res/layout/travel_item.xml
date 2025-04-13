@@ -3,50 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/cards_marginStartEnd"
-    android:layout_marginEnd="@dimen/cards_marginStartEnd"
-    app:cardCornerRadius="@dimen/cards_cornerRadius"
-    android:layout_marginTop="@dimen/cards_marginTop">
+    android:layout_marginStart="@dimen/travel_cards_marginStartEnd"
+    android:layout_marginEnd="@dimen/travel_cards_marginStartEnd"
+    android:layout_marginTop="@dimen/travel_cards_marginTop"
+    app:cardCornerRadius="@dimen/travel_cards_cornerRadius"
+    app:cardBackgroundColor="@color/white"
+    app:cardUseCompatPadding="false"
+    app:cardPreventCornerOverlap="false">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/cards_padding"
-        android:background="@color/white">
+        android:padding="@dimen/travel_cards_padding"
+        android:background="@android:color/transparent">
 
-        <!-- ImageView con dimensioni fisse e bordi arrotondati -->
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/travelImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/travel_img_width"
+            android:layout_height="@dimen/travel_img_width"
             android:scaleType="centerCrop"
             android:src="@android:color/darker_gray"
-            android:layout_marginEnd="16dp"
-            android:layout_gravity="center"
-            android:background="@drawable/rounded_image_background" />
+            android:layout_marginEnd="@dimen/travel_img_marginEnd"
+            android:contentDescription="@string/dialog_img_description"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedImageStyle"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/travelTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:textSize="@dimen/travel_tripTitle_textsize"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="@id/travelImage"
+            app:layout_constraintStart_toEndOf="@id/travelImage"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Titolo del viaggio -->
-            <TextView
-                android:id="@+id/travelTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/tripTitle_textsize"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/travelDates"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/travel_tripDates_textsize"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/travelImage"
+            app:layout_constraintStart_toEndOf="@id/travelImage"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Range di date -->
-            <TextView
-                android:id="@+id/travelDates"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/tripDates_textsize" />
-
-        </LinearLayout>
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -9,8 +9,6 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatDelegate
 import android.content.Intent
 import android.net.Uri
@@ -58,19 +56,13 @@ class SettingsActivity : AppCompatActivity() {
 
     // Verifica se i permessi necessari sono concessi
     private fun checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            // Se i permessi non sono concessi, chiedili
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_CODE
-            )
-        } else {
-            Toast.makeText(this, "Permessi già concessi", Toast.LENGTH_SHORT).show()
-        }
+        // ✅ Vai sempre alle impostazioni dell'app, anche se i permessi sono già concessi
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivity(intent)
     }
+
 
     // Gestisci la risposta alla richiesta dei permessi
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -78,7 +70,7 @@ class SettingsActivity : AppCompatActivity() {
         if (requestCode == PERMISSIONS_REQUEST_CODE) {
             if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 // Mostra un avviso che i permessi sono necessari
-                Toast.makeText(this, "Permessi necessari per fotocamera e GPS", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Permessi necessari per fotocamera, GPS e foto", Toast.LENGTH_LONG).show()
 
                 // Puoi anche indirizzare l'utente alle impostazioni dell'app per concedere i permessi manualmente
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
