@@ -1,5 +1,7 @@
 package com.example.globetrotters.adapters
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.app.AlertDialog
 import android.content.Context
 import android.text.SpannableString
@@ -12,12 +14,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.globetrotters.R
 import com.example.globetrotters.models.TravelItem
 
 class TravelAdapter(private val travelList: MutableList<TravelItem>) :
     RecyclerView.Adapter<TravelAdapter.TravelViewHolder>() {
+
+    private var selectionMode = false
+    private var selectedPositions = mutableSetOf<Int>()
+    private var onItemSelected: ((Int, Boolean) -> Unit)? = null
 
     inner class TravelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleText: TextView = itemView.findViewById(R.id.travelTitle)
@@ -49,7 +56,28 @@ class TravelAdapter(private val travelList: MutableList<TravelItem>) :
             imageView.setImageResource(android.R.color.darker_gray) // Placeholder
         }
 
+        // Determiniamo se l'elemento è selezionato
+        val isSelected = selectedPositions.contains(position)
+
+        // Impostiamo il colore di sfondo in base alla selezione
+        val cardView = holder.itemView as androidx.cardview.widget.CardView
+        cardView.setCardBackgroundColor(
+            if (isSelected) ContextCompat.getColor(holder.itemView.context, R.color.teal_200)
+            else ContextCompat.getColor(holder.itemView.context, R.color.white)
+        )
+
+
+        // Gestire il click per la selezione
+        holder.itemView.setOnClickListener {
+            if (selectionMode) {
+                val selected = selectedPositions.contains(position)
+                if (selected) selectedPositions.remove(position) else selectedPositions.add(position)
+                notifyItemChanged(position)
+                onItemSelected?.invoke(position, !selected)
+            }
+        }
     }
+
 
     override fun getItemCount(): Int = travelList.size
 
@@ -88,4 +116,12 @@ class TravelAdapter(private val travelList: MutableList<TravelItem>) :
             .create()
             .show()
     }
+
+    fun setSelectionMode(enabled: Boolean, onItemSelected: ((Int, Boolean) -> Unit)?) {
+        this.selectionMode = enabled
+        this.onItemSelected = onItemSelected
+        selectedPositions.clear()
+        notifyDataSetChanged()
+    }
+
 }

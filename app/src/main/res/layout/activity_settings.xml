@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="0dp"
     android:gravity="center"
     android:background="?android:attr/windowBackground">
 
@@ -12,29 +11,19 @@
         android:id="@+id/settings_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="@dimen/settings_title_marginBottom"
         android:gravity="center"
-        android:text="Impostazioni"
+        android:text="@string/settings_title"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="35sp"
+        android:textSize="@dimen/settings_titleSize"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/permissions_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gestione Permessi"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:textColor="?android:attr/textColorPrimary"/>
 
     <Button
         android:id="@+id/permissionsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gestisci Permessi"
-        android:layout_marginTop="8dp"
+        android:text="@string/settings_permissionsButton"
+        android:layout_marginTop="@dimen/settings_buttonPermission_marginTop"
         android:gravity="center"/>
 
     <!-- Sezione Tema -->
@@ -42,10 +31,10 @@
         android:id="@+id/theme_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tema"
-        android:textSize="20sp"
+        android:text="@string/settings_themes"
+        android:textSize="@dimen/settings_themes_textSize"
         android:textStyle="bold"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/settings_themes_marginTop"
         android:textColor="?android:attr/textColorPrimary"/>
 
     <!-- Sezione Switch Tema Chiaro/Scuro -->
@@ -53,15 +42,15 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/settings_chiaro_scuro_padding"
         android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chiaro"
-            android:textSize="16sp"
-            android:layout_marginEnd="12dp"
+            android:text="@string/settings_chiaro"
+            android:textSize="@dimen/settings_chiaro_scuro_textSize"
+            android:layout_marginEnd="@dimen/settings_chiaro_scuro_marginEnd"
             android:textColor="?android:attr/textColorSecondary" />
 
         <Switch
@@ -69,14 +58,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:minWidth="@dimen/settings_switch_minHeight"
+            android:minHeight="@dimen/settings_switch_minHeight"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scuro"
-            android:textSize="16sp"
-            android:layout_marginStart="12dp"
+            android:text="@string/settings_scuro"
+            android:textSize="@dimen/settings_chiaro_scuro_textSize"
+            android:layout_marginStart="@dimen/settings_chiaro_scuro_marginStart"
             android:textColor="?android:attr/textColorSecondary" />
     </LinearLayout>
 
@@ -85,19 +76,19 @@
         android:id="@+id/version_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Versione App"
-        android:textSize="20sp"
+        android:text="@string/settings_app_version"
+        android:textSize="@dimen/settings_app_version_textSize"
         android:textStyle="bold"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/settings_app_version_marginTop"
         android:textColor="?android:attr/textColorPrimary"/>
 
     <TextView
         android:id="@+id/versionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1.0.0"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
+        android:text="@string/settings_version_number"
+        android:textSize="@dimen/settings_version_number_textSize"
+        android:layout_marginTop="@dimen/settings_version_number_marginTop"
         android:gravity="center"
         android:textColor="?android:attr/textColorSecondary"/>
 
@@ -106,10 +97,10 @@
         android:id="@+id/exitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Esci"
-        android:layout_marginTop="40dp"
+        android:text="@string/settings_exitButton"
+        android:layout_marginTop="@dimen/settings_exitButton_marginTop"
         android:layout_gravity="center"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
     android:background="?android:attr/colorAccent"
         android:textStyle="bold" />
 

@@ -51,7 +51,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3) // Usa Material 3 invece di Material 1.9.0
+    implementation(libs.androidx.material3)
+    implementation(libs.play.services.maps) // Usa Material 3 invece di Material 1.9.0
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -60,6 +61,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation ("com.google.android.material:material:1.10.0")
 
     // SplashScreen API
     implementation("androidx.core:core-splashscreen:1.0.1")
