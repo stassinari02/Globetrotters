@@ -1,6 +1,5 @@
 package com.example.globetrotters
 
-import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
@@ -25,7 +24,6 @@ class SettingsActivity : AppCompatActivity() {
         val permissionsButton = findViewById<Button>(R.id.permissionsButton)
         val themeSwitch = findViewById<Switch>(R.id.themeSwitch)
         val versionText = findViewById<TextView>(R.id.versionText)
-        val exitButton = findViewById<Button>(R.id.exitButton)  // Pulsante "Esci"
 
         // Mostra la versione dell'app
         val versionName = packageManager.getPackageInfo(packageName, 0).versionName
@@ -46,17 +44,11 @@ class SettingsActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
         }
-
-        // Gestisci il clic sul pulsante "Esci"
-        exitButton.setOnClickListener {
-            // Chiudi l'activity e torna alla MainActivity
-            finish()
-        }
     }
 
     // Verifica se i permessi necessari sono concessi
     private fun checkPermissions() {
-        // ✅ Vai sempre alle impostazioni dell'app, anche se i permessi sono già concessi
+        // Vai sempre alle impostazioni dell'app, anche se i permessi sono già concessi
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri

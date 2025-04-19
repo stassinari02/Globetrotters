@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/fragment_previeImg_marginTop">
+
+    <ImageView
+        android:id="@+id/photoPreview"
+        android:layout_width="@dimen/fragment_previewImg_dimens"
+        android:layout_height="@dimen/fragment_previewImg_dimens"
+        android:layout_gravity="center"
+        android:background="@color/fragment_imgPreview_background"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="@dimen/fragment_previeImg_MarginBottom"
+        android:contentDescription="@string/fragment_photo_preview_description" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/takePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_photo_scatta"
+            android:layout_marginEnd="@dimen/fragment_Buttons_marginBetween" />
+
+        <Button
+            android:id="@+id/loadPhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_photo_carica" />
+    </LinearLayout>
+
+</LinearLayout>

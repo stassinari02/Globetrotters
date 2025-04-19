@@ -5,70 +5,86 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
 import android.text.Spanned
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import android.text.SpannableString
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.globetrotters.adapters.TravelAdapter
-import com.example.globetrotters.models.TravelItem
 import android.text.style.StyleSpan
-import java.io.File
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Observer
+import com.example.globetrotters.database.TravelDatabase
+import com.example.globetrotters.database.TravelEntity
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TravelAdapter
-    private val CAMERA_REQUEST_CODE = 101
-    private val IMAGE_PICK_REQUEST_CODE = 102
-    private val travelList: MutableList<TravelItem> = mutableListOf()
+    private var fullTravelList: List<TravelEntity> = emptyList()
     private val PERMISSIONS_REQUEST_CODE = 100
-    private var currentPhotoUri: Uri? = null
-    private var photoPreviewImageView: ImageView? = null // 🔥 preview collegata al dialog corrente
     private var deleteModeActive = false
     private var selectedItems = mutableSetOf<Int>()
     private var deleteClickCounter = 0
+    private lateinit var db: TravelDatabase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         recyclerView = findViewById(R.id.recyclerView)
-        adapter = TravelAdapter(travelList)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        db = TravelDatabase.getDatabase(this)
+
+        adapter = TravelAdapter(emptyList()) { travel ->
+            lifecycleScope.launch {
+                db.travelDao().deleteTravel(travel)
+            }
+        }
         recyclerView.adapter = adapter
 
-        val addTravelButton: Button = findViewById(R.id.addTravelButton)
-        addTravelButton.setOnClickListener {
-            showAddTravelDialog()
-        }
+        // Osserva i dati dal database e aggiorna l'adapter
+        db.travelDao().getAllTravels().observe(this, Observer { travels ->
+            fullTravelList = travels
+            adapter.updateList(travels)
+        })
 
+        // Icona per le settings
         val settingsIcon: ImageView = findViewById(R.id.settingsIcon)
         settingsIcon.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
 
+        val searchEditText: EditText = findViewById(R.id.searchEditText)
+        searchEditText.addTextChangedListener(object : android.text.TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) {
+                val query = s.toString().lowercase()
+                val filteredList = fullTravelList.filter { it.title.lowercase().contains(query) }
+                adapter.updateList(filteredList)
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
         checkPermissions()
 
+        // Gestione eliminazione (delete mode)
         val deleteIcon: ImageView = findViewById(R.id.deleteIcon)
         val deleteMessage: TextView = findViewById(R.id.deleteModeMessage)
-
         val superTitle = findViewById<TextView>(R.id.superTitleTextView)
         val contentTop = superTitle.parent as LinearLayout
 
         deleteIcon.setOnClickListener {
             deleteClickCounter++
-
             if (!deleteModeActive) {
                 deleteModeActive = true
                 selectedItems.clear()
@@ -76,18 +92,13 @@ class MainActivity : AppCompatActivity() {
                 adapter.setSelectionMode(true) { index, selected ->
                     if (selected) selectedItems.add(index) else selectedItems.remove(index)
                 }
-
                 // Uscita dalla modalità eliminazione se clicchi fuori
-                contentTop.setOnClickListener {
-                    exitDeleteMode()
-                }
-
+                contentTop.setOnClickListener { exitDeleteMode() }
             } else {
-                // SECONDO CLICK: mostra popup conferma
+                // Mostra popup di conferma per l'eliminazione
                 if (selectedItems.isNotEmpty()) {
-                    // 🔥 Forza il tipo per evitare errore di inferenza
-                    val selectedTitles: List<String> = selectedItems.map { index -> travelList[index].title }
-
+                    val selectedTravels = adapter.getSelectedItems()
+                    val selectedTitles = selectedTravels.map { it.title }
                     val message = SpannableString("Sicuro di voler eliminare: ${selectedTitles.joinToString(", ")}")
                     val start = message.indexOf(":") + 2
                     val end = message.length
@@ -97,9 +108,10 @@ class MainActivity : AppCompatActivity() {
                         .setTitle("Conferma eliminazione")
                         .setMessage(message)
                         .setPositiveButton("Si") { dialog, _ ->
-                            val sorted = selectedItems.sortedDescending()
-                            for (i in sorted) travelList.removeAt(i)
-                            adapter.notifyDataSetChanged()
+                            val idsToDelete = selectedTravels.map { it.id }
+                            lifecycleScope.launch {
+                                db.travelDao().deleteTravelsByIds(idsToDelete)
+                            }
                             exitDeleteMode()
                             dialog.dismiss()
                         }
@@ -113,110 +125,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        val mapIcon: ImageView = findViewById(R.id.mapIcon)
+        mapIcon.setOnClickListener {
+            startActivity(Intent(this, MapViewActivity::class.java))
+        }
+
+        val newTravelButton: Button = findViewById(R.id.addTravelButton)
+        newTravelButton.setOnClickListener {
+            val intent = Intent(this, AddTravelActivity::class.java)
+            startActivity(intent)
+        }
+
     }
-
-    private fun showAddTravelDialog() {
-        currentPhotoUri = null // 👈 Reset del valore quando apri il dialog
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_travel, null)
-        val titleEditText = dialogView.findViewById<EditText>(R.id.editTitle)
-        val startDatePicker = dialogView.findViewById<DatePicker>(R.id.startDatePicker)
-        val endDatePicker = dialogView.findViewById<DatePicker>(R.id.endDatePicker)
-        val createButton = dialogView.findViewById<Button>(R.id.createButton)
-        val errorMessage = dialogView.findViewById<TextView>(R.id.errorMessage)
-        val takePhotoButton = dialogView.findViewById<Button>(R.id.takePhotoButton)
-        val loadPhotoButton = dialogView.findViewById<Button>(R.id.loadPhotoButton)
-        photoPreviewImageView = dialogView.findViewById(R.id.photoPreview)
-
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .create()
-
-        val backArrow = dialogView.findViewById<ImageView>(R.id.backArrow)
-        backArrow.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        takePhotoButton.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-                val photoFile = File.createTempFile("travel_photo_", ".jpg", cacheDir)
-
-                currentPhotoUri = FileProvider.getUriForFile(
-                    this,
-                    "com.example.globetrotters.provider",
-                    photoFile
-                )
-
-                intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, currentPhotoUri)
-                startActivityForResult(intent, CAMERA_REQUEST_CODE)
-            } else {
-                Toast.makeText(this, "Permesso fotocamera non concesso", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        loadPhotoButton.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
-                val intent = Intent(Intent.ACTION_PICK).apply {
-                    type = "image/*"
-                }
-                startActivityForResult(intent, IMAGE_PICK_REQUEST_CODE)
-
-            } else {
-                Toast.makeText(this, "Permesso lettura immagini non concesso", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        createButton.setOnClickListener {
-            val title = titleEditText.text.toString().trim()
-            val startCalendar = java.util.Calendar.getInstance().apply {
-                set(startDatePicker.year, startDatePicker.month, startDatePicker.dayOfMonth)
-            }
-            val endCalendar = java.util.Calendar.getInstance().apply {
-                set(endDatePicker.year, endDatePicker.month, endDatePicker.dayOfMonth)
-            }
-
-            // Verifica se la data di fine è precedente alla data di inizio
-            if (title.isEmpty()) {
-                errorMessage.text = "Il titolo non può essere vuoto"
-                errorMessage.visibility = View.VISIBLE
-            } else if (endCalendar.before(startCalendar)) {
-                errorMessage.text = "La data di fine non può essere precedente a quella di inizio"
-                errorMessage.visibility = View.VISIBLE
-            } else {
-                val startDate = "${startDatePicker.dayOfMonth}/${startDatePicker.month + 1}/${startDatePicker.year}"
-                val endDate = "${endDatePicker.dayOfMonth}/${endDatePicker.month + 1}/${endDatePicker.year}"
-
-                val travelItem = TravelItem(title, "$startDate - $endDate", currentPhotoUri?.toString())
-                adapter.addItem(travelItem)
-                dialog.dismiss()
-            }
-        }
-
-        dialog.show()
-        dialog.window?.setLayout(
-            (resources.displayMetrics.widthPixels * 1).toInt(),  // 100% della larghezza dello schermo
-            LinearLayout.LayoutParams.WRAP_CONTENT)
-    }
-
-
-    // Verifica se i permessi sono in stato "Ask every time"
-    private fun shouldRequestPermissions(): Boolean {
-        val cameraStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-        val locationStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        val readMediaStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
-        val readExternalStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-
-        return ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) ||
-                ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) ||
-                ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_MEDIA_IMAGES) ||
-                ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE) ||
-                cameraStatus == PackageManager.PERMISSION_DENIED ||
-                locationStatus == PackageManager.PERMISSION_DENIED ||
-                (readMediaStatus == PackageManager.PERMISSION_DENIED && readExternalStatus == PackageManager.PERMISSION_DENIED)
-    }
-
 
     private fun checkPermissions() {
         val permissionsToRequest = mutableListOf<String>()
@@ -248,7 +168,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -272,25 +191,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-            currentPhotoUri?.let { uri ->
-                Toast.makeText(this, "Foto salvata: $uri", Toast.LENGTH_SHORT).show()
-                photoPreviewImageView?.setImageURI(uri) // ✅ aggiorna la preview nel dialog visibile
-            }
-        }
-        else if (requestCode == IMAGE_PICK_REQUEST_CODE && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                currentPhotoUri = uri
-                photoPreviewImageView?.setImageURI(uri)
-                Toast.makeText(this, "Foto caricata dalla galleria", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-    }
-
     private fun exitDeleteMode() {
         deleteModeActive = false
         deleteClickCounter = 0
@@ -299,6 +199,6 @@ class MainActivity : AppCompatActivity() {
         adapter.setSelectionMode(false, null)
         val superTitle = findViewById<TextView>(R.id.superTitleTextView)
         val contentTop = superTitle.parent as LinearLayout
-        contentTop.setOnClickListener(null) // disattiva uscita touch
+        contentTop.setOnClickListener(null) // disattiva uscita touch
     }
 }
