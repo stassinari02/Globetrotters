@@ -2,7 +2,7 @@
 <resources>
     ------------------------------------------------------------activity_main
 
-    <dimen name="main_page_padding">16dp</dimen>
+    <dimen name="main_page_padding">6dp</dimen>
     <dimen name="main_SuperTitle">30sp</dimen>
 
     <dimen name="main_FirstArea_marginTop">32dp</dimen>
@@ -11,8 +11,10 @@
     <dimen name="main_settingsIcon_width_height">30dp</dimen>
     <dimen name="main_title_size">42sp</dimen>
 
-    <dimen name="main_SecondArea_marginTop">84dp</dimen>
+    <dimen name="main_SecondArea_marginTop">50dp</dimen>
     <dimen name="main_SecondArea_marginBottom">12dp</dimen>
+
+    <dimen name="main_Search_padding">8dp</dimen>
 
     <dimen name="main_NewTravelButton_width">140dp</dimen>
     <dimen name="main_NewTravelButton_marginEnd">8dp</dimen>
@@ -20,11 +22,13 @@
     <dimen name="main_BinIcon_dimens">40dp</dimen>
 
     <dimen name="main_recyclerView_paddingTop">16dp</dimen>
-    <dimen name="main_recyclerView_marginStartEnd">16dp</dimen>
+    <dimen name="main_recyclerView_marginStartEnd">0dp</dimen>
 
-------------------------------------------------------------------travel_item
+    <dimen name="main_deleteMessage_padding">8dp</dimen>
 
-    <dimen name="travel_cards_marginStartEnd">40dp</dimen>
+    ------------------------------------------------------------------travel_item
+
+    <dimen name="travel_cards_marginStartEnd">25dp</dimen>
     <dimen name="travel_cards_cornerRadius">16dp</dimen>
     <dimen name="travel_cards_padding">8dp</dimen>
     <dimen name="travel_cards_marginTop">10dp</dimen>
@@ -35,34 +39,25 @@
     <dimen name="travel_tripTitle_textsize">24sp</dimen>
     <dimen name="travel_tripDates_textsize">14sp</dimen>
 
----------------------------------------------------------------------dialog_add_travel
+    ---------------------------------------------------------------------activity_add_travel
 
-    <dimen name="dialog_travel_padding">2dp</dimen>
+    <dimen name="add_travel_padding">2dp</dimen>
 
-    <dimen name="dialog_backArrow_dimens">48dp</dimen>
-    <dimen name="dialog_title_min_height">48dp</dimen>
-    <dimen name="dialog_backArrow_marginBottom">8dp</dimen>
-    <dimen name="dialog_backArrow_padding">4dp</dimen>
+    <dimen name="add_backArrow_dimens">48dp</dimen>
 
-    <dimen name="dialog_PhotoButtons_Distance">12dp</dimen>
-    <dimen name="dialog_PhotoButtons_MarginTop">16dp</dimen>
-    <dimen name="dialog_PhotoButtons_MarginBottom">8dp</dimen>
+    <dimen name="add_title_min_height">48dp</dimen>
+    <dimen name="add_title_paddingVertical">12dp</dimen>
 
-    <dimen name="dialog_title_paddingVertical">12dp</dimen>
+    <dimen name="add_createButton_marginTop">8dp</dimen>
+    <dimen name="add_createButton_marginBottom">4dp</dimen>
+    <dimen name="add_createButton_padding">12dp</dimen>
+    <dimen name="add_createButton_elevation">4dp</dimen>
 
-    <dimen name="dialog_previewImg_dimens">150dp</dimen>
-    <dimen name="dialog_previeImg_marginTop">12dp</dimen>
-    <dimen name="dialog_ScattaFoto_button_marginTop">8dp</dimen>
-
-    <dimen name="dialog_datePickers_marginTop">16dp</dimen>
-
-    <dimen name="dialog_createButton_marginTop">8dp</dimen>
-    <dimen name="dialog_createButton_marginBottom">4dp</dimen>
-    <dimen name="dialog_createButton_padding">12dp</dimen>
-    <dimen name="dialog_createButton_elevation">4dp</dimen>
-    <dimen name="dialog_error_message_Paddingtop">8dp</dimen>
+    <dimen name="add_error_message_Paddingtop">8dp</dimen>
 
     ---------------------------------------------------------------activity_settings
+
+    <dimen name="settings_backArrow_dimens">48dp</dimen>
 
     <dimen name="settings_title_marginBottom">5dp</dimen>
     <dimen name="settings_titleSize">35sp</dimen>
@@ -84,6 +79,18 @@
     <dimen name="settings_version_number_textSize">16sp</dimen>
     <dimen name="settings_version_number_marginTop">8dp</dimen>
 
-    <dimen name="settings_exitButton_marginTop">40dp</dimen>
+    ---------------------------------------------------------------fragments
+
+    <dimen name="fragment_backArrow_padding">8dp</dimen>
+
+    <dimen name="fragment_datePickers_marginTop">16dp</dimen>
+    <dimen name="fragment_datePickers_width">200dp</dimen>
+    <dimen name="fragment_datePickers_height">400dp</dimen>
+
+    <dimen name="fragment_previewImg_dimens">150dp</dimen>
+    <dimen name="fragment_previeImg_marginTop">12dp</dimen>
+    <dimen name="fragment_previeImg_MarginBottom">16dp</dimen>
+
+    <dimen name="fragment_Buttons_marginBetween">12dp</dimen>
 
 </resources>

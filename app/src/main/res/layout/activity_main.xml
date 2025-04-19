@@ -11,90 +11,126 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/app_name"
+        android:text="@string/main_app_name"
         android:textColor="@color/white"
         android:textSize="@dimen/main_SuperTitle"
         android:textStyle="bold"/>
 
 
     <!-- Contenitore titolo + settings icon -->
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="top"
+        android:layout_marginTop="@dimen/main_FirstArea_marginTop"
+        android:paddingStart="@dimen/main_FirstArea_paddingStart_End"
+        android:paddingEnd="@dimen/main_FirstArea_paddingStart_End">
+
+        <!-- Titolo I Tuoi\nViaggi -->
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="top"
-            android:layout_marginTop="@dimen/main_FirstArea_marginTop"
-            android:paddingStart="@dimen/main_FirstArea_paddingStart_End"
-            android:paddingEnd="@dimen/main_FirstArea_paddingStart_End">
+            android:layout_weight="1"
+            android:text="@string/main_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/main_title_size"
+            android:textStyle="bold" />
 
-            <!-- Titolo I Tuoi\nViaggi -->
-            <TextView
-                android:id="@+id/titleTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="I Tuoi\nViaggi"
-                android:textColor="@color/white"
-                android:textSize="@dimen/main_title_size"
-                android:textStyle="bold" />
+        <!-- Layout verticale per le due icone -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="fill_vertical">
 
-            <!-- Icona settings allineata in alto -->
+            <!-- Icona settings allineata in alto rispetto al TextView -->
             <ImageView
                 android:id="@+id/settingsIcon"
                 android:layout_width="@dimen/main_settingsIcon_width_height"
-                android:layout_height="@dimen/main_settingsIcon_width_height"
-                android:layout_gravity="top"
-                android:src="@drawable/ic_settings"
-                android:contentDescription="@string/main_ImgSettings_description"/>
-        </LinearLayout>
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_alignTop="@id/titleTextView"
+                android:src="@drawable/settings_icon"
+                android:contentDescription="@string/main_ImgSettings_description" />
 
-        <!-- Barra ricerca + pulsanti -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="@dimen/main_SecondArea_marginTop"
-            android:layout_marginBottom="@dimen/main_SecondArea_marginBottom">
-
-            <Button
-                android:id="@+id/addTravelButton"
-                android:layout_width="@dimen/main_NewTravelButton_width"
-                android:layout_height="wrap_content"
-                android:text="@string/main_NuovoViaggio"
-                android:textColor="@color/main_Button_textColor"
-                android:background="@drawable/rounded_button_black"
-                android:layout_marginEnd="@dimen/main_NewTravelButton_marginEnd" />
-
+            <!-- Icona mappa allineata in basso rispetto al TextView -->
             <ImageView
-                android:id="@+id/deleteIcon"
-                android:layout_width="@dimen/main_BinIcon_dimens"
-                android:layout_height="@dimen/main_BinIcon_dimens"
-                android:src="@drawable/bin_icon"
-                android:contentDescription="Delete Travel"
-                android:layout_gravity="center_vertical" />
+                android:id="@+id/mapIcon"
+                android:layout_width="@dimen/main_settingsIcon_width_height"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_alignBottom="@id/titleTextView"
+                android:src="@drawable/map_icon"
+                android:contentDescription="@string/main_ImgMap_description" />
         </LinearLayout>
+    </LinearLayout>
+
+    <!-- Barra ricerca + pulsanti -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/main_SecondArea_marginTop"
+        android:layout_marginBottom="@dimen/main_SecondArea_marginBottom"
+        android:paddingStart="@dimen/main_recyclerView_marginStartEnd"
+        android:paddingEnd="@dimen/main_recyclerView_marginStartEnd"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/main_search"
+            android:background="@drawable/rounded_button_black"
+            android:padding="@dimen/main_Search_padding"
+            android:textColor="@color/main_Button_textColor"
+            android:textColorHint="@color/main_Button_textColor"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="@dimen/main_Search_padding" />
+
+        <Button
+            android:id="@+id/addTravelButton"
+            android:layout_width="@dimen/main_NewTravelButton_width"
+            android:layout_height="wrap_content"
+            android:text="@string/main_NuovoViaggio"
+            android:textColor="@color/main_Button_textColor"
+            android:background="@drawable/rounded_button_black"
+            android:layout_marginStart="@dimen/main_NewTravelButton_marginEnd"
+            android:layout_marginEnd="@dimen/main_NewTravelButton_marginEnd" />
+
+        <ImageView
+            android:id="@+id/deleteIcon"
+            android:layout_width="@dimen/main_BinIcon_dimens"
+            android:layout_height="@dimen/main_BinIcon_dimens"
+            android:src="@drawable/bin_icon"
+            android:contentDescription="@string/main_ImgBin_description"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/deleteModeMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Seleziona i viaggi che vuoi eliminare, poi riclicca sul cestino"
-        android:textColor="@android:color/holo_red_dark"
+        android:text="@string/main_deleteMessage"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:background="@color/main_Button_textColor"
         android:gravity="center"
-        android:padding="8dp"
-        android:visibility="gone"
-        />
+        android:padding="@dimen/main_deleteMessage_padding"
+        android:visibility="gone" />
 
     <!-- RecyclerView centrata con margini -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:layout_marginStart="@dimen/main_recyclerView_marginStartEnd"
-            android:layout_marginEnd="@dimen/main_recyclerView_marginStartEnd"
-            android:nestedScrollingEnabled="false"
-            android:paddingTop="@dimen/main_recyclerView_paddingTop"
-            android:contentDescription="@string/main_recyclerView_description"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:layout_marginStart="@dimen/main_recyclerView_marginStartEnd"
+        android:layout_marginEnd="@dimen/main_recyclerView_marginStartEnd"
+        android:nestedScrollingEnabled="false"
+        android:paddingTop="@dimen/main_recyclerView_paddingTop"
+        android:contentDescription="@string/main_recyclerView_description"/>
 </LinearLayout>

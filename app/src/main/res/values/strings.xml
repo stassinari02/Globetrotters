@@ -1,20 +1,21 @@
 <resources>
     <string name="app_name">Globetrotters</string>
     ------------------------------------------------------------------------------activity_main
+    <string name="main_app_name">Globetrotters</string>
+
+    <string name="main_title">I Tuoi\nViaggi</string>
+
+    <string name="main_NuovoViaggio">Nuovo Viaggio</string>
+    <string name="main_search">Cerca ...</string>
+
+    <string name="main_deleteMessage">Seleziona i viaggi che vuoi eliminare, poi riclicca sul cestino</string>
+
     <string name="main_recyclerView_description">Lista dei viaggi</string>
-    <string name="main_title">I Tuoi Viaggi</string>
-
-    <string name="main_NuovoViaggio"> -> Nuovo Viaggio</string>
-
     <string name="main_ImgSettings_description">Settings img</string>
-    --------------------------------------------------------------------------dialog_add_travel
+    <string name="main_ImgMap_description">Map img</string>
+    <string name="main_ImgBin_description">Delete Travel</string>
+    --------------------------------------------------------------------------activity_add_travel
     <string name="dialog_chooseTitle">Scegli un titolo per la vacanza</string>
-    <string name="dialog_backArrow">Torna indietro</string>
-
-    <string name="dialog_previewPhoto">Anteprima foto</string>
-    <string name="dialog_photo">Scatta Foto</string>
-    <string name="dialog_loadPhoto">Carica Foto</string>
-    <string name="dialog_img_description">Profile Photo</string>
 
     <string name="dialog_errorMessage">Non hai compilato tutti i campi (titolo e date) !!</string>
 
@@ -32,7 +33,15 @@
     <string name="settings_app_version">Versione App</string>
     <string name="settings_version_number">1.0.0</string>
 
-    <string name="settings_exitButton">Esci</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    ---------------------------------------------------------------------------travel_item
+
+    <string name="travel_img_description">Foto Profilo</string>
+
+    --------------------------------------------------------------------------fragments
+    <string name="fragment_backArrow_description">Torna ndietro</string>
+
+    <string name="fragment_photo_preview_description">Preview foto profilo</string>
+    <string name="fragment_photo_scatta">SCATTA FOTO</string>
+    <string name="fragment_photo_carica">CARICA FOTO</string>
+
 </resources>

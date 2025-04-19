@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:background="?android:attr/windowBackground">
 
-    <!-- Sezione Gestione Permessi -->
+    <fragment
+        android:id="@+id/backArrowFragment"
+        android:name="com.example.globetrotters.fragments.BackArrowFragment"
+        android:layout_width="@dimen/settings_backArrow_dimens"
+        android:layout_height="@dimen/settings_backArrow_dimens" />
+
     <TextView
         android:id="@+id/settings_label"
         android:layout_width="wrap_content"
@@ -91,17 +97,5 @@
         android:layout_marginTop="@dimen/settings_version_number_marginTop"
         android:gravity="center"
         android:textColor="?android:attr/textColorSecondary"/>
-
-    <!-- Pulsante per uscire dalle impostazioni -->
-    <Button
-        android:id="@+id/exitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_exitButton"
-        android:layout_marginTop="@dimen/settings_exitButton_marginTop"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-    android:background="?android:attr/colorAccent"
-        android:textStyle="bold" />
 
 </LinearLayout>

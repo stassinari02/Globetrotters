@@ -5,8 +5,8 @@
     <item>
         <bitmap
             android:src="@drawable/splash_logo"
-        android:gravity="center"
-        android:tileMode="disabled"
-        android:scaleType="fitCenter"/>
+            android:gravity="center"
+            android:tileMode="disabled"
+            android:scaleType="fitCenter"/>
     </item>
 </layer-list>
