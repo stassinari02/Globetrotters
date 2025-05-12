@@ -23,17 +23,25 @@
                 android:layout_width="@dimen/add_backArrow_dimens"
                 android:layout_height="@dimen/add_backArrow_dimens" />
 
+        </LinearLayout>
+
+        <!-- Bottone Aggiungi Posizione -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
             <Button
                 android:id="@+id/locationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/dark_green"
+                android:elevation="6dp"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
                 android:text="Aggiungi Posizione"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:padding="12dp"
-                android:background="@color/black"
-                android:textColor="@android:color/white"
-                android:elevation="4dp" />
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
 
@@ -47,7 +55,6 @@
             android:paddingVertical="@dimen/add_title_paddingVertical" />
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -84,8 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dialog_createButton"
-            android:textColor="@android:color/white"
-            android:background="@color/black"
+            android:textColor="@android:color/black"
+            android:background="@color/fragment_imgPreview_background"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/add_createButton_marginTop"
             android:layout_marginBottom="@dimen/add_createButton_marginBottom"

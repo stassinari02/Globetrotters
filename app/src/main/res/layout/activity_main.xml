@@ -84,12 +84,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/main_search"
-            android:background="@drawable/rounded_button_black"
+            android:background="@drawable/rounded_button_white"
             android:padding="@dimen/main_Search_padding"
             android:textColor="@color/main_Button_textColor"
             android:textColorHint="@color/main_Button_textColor"
             android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="@dimen/main_Search_padding" />
+
 
         <Button
             android:id="@+id/addTravelButton"
@@ -97,7 +98,8 @@
             android:layout_height="wrap_content"
             android:text="@string/main_NuovoViaggio"
             android:textColor="@color/main_Button_textColor"
-            android:background="@drawable/rounded_button_black"
+            android:background="@drawable/rounded_button_white"
+            android:drawableStart="@drawable/plus"
             android:layout_marginStart="@dimen/main_NewTravelButton_marginEnd"
             android:layout_marginEnd="@dimen/main_NewTravelButton_marginEnd" />
 
@@ -115,12 +117,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/main_deleteMessage"
-        android:textColor="@color/red"
+        android:textColor="@android:color/holo_red_dark"
         android:textStyle="bold"
-        android:background="@color/main_Button_textColor"
+        android:background="@color/white"
         android:gravity="center"
         android:padding="@dimen/main_deleteMessage_padding"
         android:visibility="gone" />
+
 
     <!-- RecyclerView centrata con margini -->
     <androidx.recyclerview.widget.RecyclerView

@@ -8,7 +8,6 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import android.content.Intent
 import android.net.Uri
 
@@ -22,39 +21,56 @@ class SettingsActivity : AppCompatActivity() {
 
         // Recupera i componenti della UI
         val permissionsButton = findViewById<Button>(R.id.permissionsButton)
-        val themeSwitch = findViewById<Switch>(R.id.themeSwitch)
+        val shareButton = findViewById<Button>(R.id.shareButton)
+        val feedbackButton = findViewById<Button>(R.id.feedbackButton)
         val versionText = findViewById<TextView>(R.id.versionText)
 
         // Mostra la versione dell'app
         val versionName = packageManager.getPackageInfo(packageName, 0).versionName
         versionText.text = "Versione $versionName"
 
-        // Gestisci la richiesta dei permessi quando si clicca il pulsante
+        // Gestisci il pulsante di condivisione dell'app
+        shareButton.setOnClickListener {
+            shareApp()
+        }
+
+        // Gestisci il pulsante di feedback
+        feedbackButton.setOnClickListener {
+            openFeedback()
+        }
+
+        // Gestisci la richiesta dei permessi
         permissionsButton.setOnClickListener {
             checkPermissions()
         }
+    }
 
-        // Gestisci il tema chiaro/scuro
-        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // Imposta tema chiaro
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            } else {
-                // Imposta tema scuro
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            }
+    // Funzione per condividere l'app
+    private fun shareApp() {
+        val appPackageName = packageName // Ottieni il pacchetto dell'app
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Ti consiglio questa app!")
+            putExtra(Intent.EXTRA_TEXT, "Dai un'occhiata a questa app fantastica: https://play.google.com/store/apps/details?id=$appPackageName")
         }
+        startActivity(Intent.createChooser(shareIntent, "Condividi con"))
+    }
+
+    // Funzione per aprire il feedback
+    private fun openFeedback() {
+        // Mail per supporto
+        val feedbackUrl = "mailto:support@globetrotters.com?subject=Feedback%20su%20Globetrotters"
+        val feedbackIntent = Intent(Intent.ACTION_SENDTO, Uri.parse(feedbackUrl))
+        startActivity(feedbackIntent)
     }
 
     // Verifica se i permessi necessari sono concessi
     private fun checkPermissions() {
-        // Vai sempre alle impostazioni dell'app, anche se i permessi sono già concessi
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
     }
-
 
     // Gestisci la risposta alla richiesta dei permessi
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

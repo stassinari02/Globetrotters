@@ -106,4 +106,7 @@ dependencies {
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:$room_version")
 
+    implementation ("androidx.preference:preference-ktx:1.2.1")
+
+
 }

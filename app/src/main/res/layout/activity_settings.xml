@@ -98,4 +98,21 @@
         android:gravity="center"
         android:textColor="?android:attr/textColorSecondary"/>
 
+    <!-- Sezione Condivisione e Feedback -->
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consiglia l'app agli amici"
+        android:layout_marginTop="20dp"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/feedbackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Feedback e Supporto"
+        android:layout_marginTop="20dp"
+        android:gravity="center"/>
+
 </LinearLayout>

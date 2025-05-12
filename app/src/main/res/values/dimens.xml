@@ -3,13 +3,13 @@
     ------------------------------------------------------------activity_main
 
     <dimen name="main_page_padding">6dp</dimen>
-    <dimen name="main_SuperTitle">30sp</dimen>
+    <dimen name="main_SuperTitle">45sp</dimen>
 
     <dimen name="main_FirstArea_marginTop">32dp</dimen>
     <dimen name="main_FirstArea_paddingStart_End">24dp</dimen>
 
     <dimen name="main_settingsIcon_width_height">30dp</dimen>
-    <dimen name="main_title_size">42sp</dimen>
+    <dimen name="main_title_size">35sp</dimen>
 
     <dimen name="main_SecondArea_marginTop">50dp</dimen>
     <dimen name="main_SecondArea_marginBottom">12dp</dimen>

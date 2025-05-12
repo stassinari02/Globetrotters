@@ -6,22 +6,22 @@
     <string name="main_title">I Tuoi\nViaggi</string>
 
     <string name="main_NuovoViaggio">Nuovo Viaggio</string>
-    <string name="main_search">Cerca ...</string>
+    <string name="main_search">Cerca</string>
 
     <string name="main_deleteMessage">Seleziona i viaggi che vuoi eliminare, poi riclicca sul cestino</string>
 
     <string name="main_recyclerView_description">Lista dei viaggi</string>
     <string name="main_ImgSettings_description">Settings img</string>
     <string name="main_ImgMap_description">Map img</string>
-    <string name="main_ImgBin_description">Delete Travel</string>
+    <string name="main_ImgBin_description">Rimuovi viaggio</string>
     --------------------------------------------------------------------------activity_add_travel
     <string name="dialog_chooseTitle">Scegli un titolo per la vacanza</string>
 
-    <string name="dialog_errorMessage">Non hai compilato tutti i campi (titolo e date) !!</string>
+    <string name="dialog_errorMessage">Non hai compilato tutti i campi (titolo e date)!</string>
 
     <string name="dialog_createButton">Crea</string>
 
-    ---------------------------------------------------------------------------acrivity_settings
+    ---------------------------------------------------------------------------activity_settings
     <string name="settings_title">Impostazioni</string>
 
     <string name="settings_permissionsButton">Gestisci Permessi</string>
@@ -35,13 +35,13 @@
 
     ---------------------------------------------------------------------------travel_item
 
-    <string name="travel_img_description">Foto Profilo</string>
+    <string name="travel_img_description">Foto profilo</string>
 
     --------------------------------------------------------------------------fragments
-    <string name="fragment_backArrow_description">Torna ndietro</string>
+    <string name="fragment_backArrow_description">Torna indietro</string>
 
     <string name="fragment_photo_preview_description">Preview foto profilo</string>
-    <string name="fragment_photo_scatta">SCATTA FOTO</string>
-    <string name="fragment_photo_carica">CARICA FOTO</string>
+    <string name="fragment_photo_scatta">Scatta foto</string>
+    <string name="fragment_photo_carica">Carica foto</string>
 
 </resources>
