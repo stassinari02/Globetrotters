@@ -86,6 +86,6 @@ class SettingsActivity : AppCompatActivity() {
                 intent.data = uri
                 startActivity(intent)
             }
+            }
         }
-    }
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_mountain">
+
+    <!-- Back arrow in alto a destra -->
+    <fragment
+        android:id="@+id/backArrowFragment"
+        android:name="com.example.globetrotters.fragments.BackArrowFragment"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="top|start" />
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <!-- Titolo del viaggio -->
+        <TextView
+            android:id="@+id/detailTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titolo Viaggio"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="56dp" />
+
+        <!-- Pulsanti per foto + icona cestino -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/takePhotoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scatta Foto" />
+
+            <Button
+                android:id="@+id/loadPhotoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carica Foto"
+                android:layout_marginStart="16dp" />
+
+            <ImageView
+                android:id="@+id/photoDeleteIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/bin_icon"
+                android:contentDescription="Elimina foto"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+
+        <!-- Messaggio modalità eliminazione -->
+        <TextView
+            android:id="@+id/photoDeleteModeMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleziona le foto che vuoi eliminare poi ripremi il cestino"
+            android:textColor="@android:color/holo_red_dark"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:padding="8dp"
+            android:visibility="gone"
+            android:layout_marginTop="8dp" />
+
+        <!-- Sezione bianca per le preview -->
+        <LinearLayout
+            android:id="@+id/photoSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:padding="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/photosLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photos:"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/photosRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="136dp"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
+            <Button
+                android:id="@+id/openGalleryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vai a galleria"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp">
+
+            <EditText
+                android:id="@+id/searchNoteEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Cerca note..."
+                android:background="@drawable/rounded_button_white"
+                android:padding="8dp" />
+
+            <ImageButton
+                android:id="@+id/addNoteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus"
+                android:background="@drawable/rounded_button_white"
+                android:contentDescription="Aggiungi nota"
+                android:padding="8dp"
+                android:layout_marginStart="8dp" />
+
+            <ImageView
+                android:id="@+id/noteDeleteIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/bin_icon"
+                android:contentDescription="Elimina note"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <!-- Messaggio modalità eliminazione note -->
+        <TextView
+            android:id="@+id/noteDeleteModeMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleziona le note che vuoi eliminare, poi ripremi il cestino"
+            android:textColor="@android:color/holo_red_dark"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:padding="8dp"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- RecyclerView verticale note -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"/>
+    </LinearLayout>
+</FrameLayout>

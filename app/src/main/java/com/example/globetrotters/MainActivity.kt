@@ -200,5 +200,5 @@ class MainActivity : AppCompatActivity() {
         val superTitle = findViewById<TextView>(R.id.superTitleTextView)
         val contentTop = superTitle.parent as LinearLayout
         contentTop.setOnClickListener(null) // disattiva uscita touch
-    }
+        }
 }

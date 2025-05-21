@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/backArrowFragment"
+        android:name="com.example.globetrotters.fragments.BackArrowFragment"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="top|start" />
+
+    <!-- Titolo del viaggio -->
+    <TextView
+        android:id="@+id/galleryTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Titolo Viaggio"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp" />
+
+
+    <!-- Icona cestino e messaggio -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <!-- sotto RecyclerView, dentro il tuo FrameLayout o LinearLayout -->
+        <ImageView
+            android:id="@+id/galleryDeleteIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/bin_icon"
+            android:contentDescription="Elimina foto"
+            app:tint="@android:color/black" />
+
+
+        <TextView
+            android:id="@+id/galleryDeleteModeMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleziona le foto da eliminare, poi riclicca sul cestino"
+            android:visibility="gone"
+            android:layout_marginStart="8dp"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
+
+    <!-- Griglia delle foto -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/galleryRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>
