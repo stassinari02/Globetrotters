@@ -133,5 +133,5 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
         val marker = mMap.addMarker(MarkerOptions().position(latLng).title("Selezionato"))
         marker?.showInfoWindow() // Mostra subito il titolo
         pickedLatLng = latLng
-    }
+       }
 }

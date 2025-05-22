@@ -109,6 +109,6 @@ class PhotoFragment : Fragment() {
         } catch (e: Exception) {
             e.printStackTrace()
             null
+            }
         }
-    }
 }

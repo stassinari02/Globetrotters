@@ -22,5 +22,5 @@ class BackArrowFragment : Fragment() {
         }
 
         return view
-    }
+        }
 }
