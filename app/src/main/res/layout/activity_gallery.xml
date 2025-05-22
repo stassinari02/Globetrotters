@@ -8,15 +8,15 @@
     <!-- Intestazione: back-arrow a sinistra, titolo centrato nella schermata -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:padding="8dp">
+        android:layout_height="@dimen/gallery_navHeight"
+        android:padding="@dimen/gallery_navPadding">
 
         <!-- Back arrow ancorata a sinistra -->
         <fragment
             android:id="@+id/backArrowFragment"
             android:name="com.example.globetrotters.fragments.BackArrowFragment"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/gallery_backArrow_dimens"
+            android:layout_height="@dimen/gallery_backArrow_dimens"
             android:layout_gravity="start|center_vertical" />
 
         <!-- Titolo centrato orizzontalmente -->
@@ -25,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Titolo Viaggio"
-            android:textSize="24sp"
+            android:text="@string/gallery_title"
+            android:textSize="@dimen/gallery_titleTextSize"
             android:textStyle="bold"
             android:textColor="@android:color/black" />
     </FrameLayout>
@@ -36,31 +36,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
+        android:padding="@dimen/gallery_binMessage_padding"
         android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/galleryDeleteIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/gallery_binIcon_dimens"
+            android:layout_height="@dimen/gallery_binIcon_dimens"
             android:src="@drawable/bin_icon"
-            android:contentDescription="Elimina foto"
+            android:contentDescription="@string/gallery_deletePhoto"
+            android:layout_marginStart="@dimen/gallery_binIcon_MarginStart"
             app:tint="@android:color/black" />
 
         <TextView
             android:id="@+id/galleryDeleteModeMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/gallery_deleteMessage_MarginStart"
             android:gravity="center_vertical"
-            android:text="Seleziona le foto da eliminare, poi riclicca sul cestino"
+            android:text="@string/gallery_deleteMessage"
             android:visibility="gone"/>
     </LinearLayout>
 
-    <!-- Griglia delle foto -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/galleryRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/gallery_RecyclerView_Height"
         android:layout_weight="1"/>
 </LinearLayout>

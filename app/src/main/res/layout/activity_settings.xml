@@ -103,16 +103,16 @@
         android:id="@+id/shareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Consiglia l'app agli amici"
-        android:layout_marginTop="20dp"
+        android:text="@string/settings_SendToFriends"
+        android:layout_marginTop="@dimen/settings_Buttons_MargintTop"
         android:gravity="center"/>
 
     <Button
         android:id="@+id/feedbackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Feedback e Supporto"
-        android:layout_marginTop="20dp"
+        android:text="@string/settings_FeedbackAndSupport"
+        android:layout_marginTop="@dimen/settings_Buttons_MargintTop"
         android:gravity="center"/>
 
 </LinearLayout>

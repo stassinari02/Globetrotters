@@ -48,12 +48,25 @@
     <dimen name="add_title_min_height">48dp</dimen>
     <dimen name="add_title_paddingVertical">12dp</dimen>
 
+    <dimen name="add_LocationButton_MarginTop">24dp</dimen>
+    <dimen name="add_LocationButton_Elevation">6dp</dimen>
+    <dimen name="add_LocationButton_PaddingOrizzontal">24dp</dimen>
+    <dimen name="add_LocationButton_PaddingVertical">12dp</dimen>
+
     <dimen name="add_createButton_marginTop">8dp</dimen>
     <dimen name="add_createButton_marginBottom">4dp</dimen>
     <dimen name="add_createButton_padding">12dp</dimen>
     <dimen name="add_createButton_elevation">4dp</dimen>
 
     <dimen name="add_error_message_Paddingtop">8dp</dimen>
+
+    ---------------------------------------------------------------activity_map_view
+
+    <dimen name="map_confirmButton_minHeight">56dp</dimen>
+    <dimen name="map_paddingOrizzontal">32dp</dimen>
+    <dimen name="map_confirmButton_textsize">18sp</dimen>
+    <dimen name="map_confirmButton_marginBottom">24dp</dimen>
+    <dimen name="map_confitmButton_elevation">8dp</dimen>
 
     ---------------------------------------------------------------activity_settings
 
@@ -78,6 +91,74 @@
     <dimen name="settings_app_version_marginTop">32dp</dimen>
     <dimen name="settings_version_number_textSize">16sp</dimen>
     <dimen name="settings_version_number_marginTop">8dp</dimen>
+    <dimen name="settings_Buttons_MargintTop">20dp</dimen>
+
+    ---------------------------------------------------------------activity_gallery
+
+    <dimen name="details_navBar_padding">16dp</dimen>
+    <dimen name="details_backArrow_dimens">48dp</dimen>
+    <dimen name="details_title_textSize">24sp</dimen>
+
+    <dimen name="details_Buttons_padding">16dp</dimen>
+    <dimen name="details_Buttons_marginTop">72dp</dimen>
+    <dimen name="details_binIcon_dimens">24dp</dimen>
+    <dimen name="details_LoadPhotoButton_marginStart">16dp</dimen>
+    <dimen name="details_binIcon_marginStart">16dp</dimen>
+
+    <dimen name="details_photo_paddingAndMarginstart">8dp</dimen>
+    <dimen name="details_photoSection_padding">12dp</dimen>
+    <dimen name="details_photoSection_margin">16dp</dimen>
+    <dimen name="details_photos_textSize">16sp</dimen>
+    <dimen name="details_photos_marginBottom">8dp</dimen>
+    <dimen name="details_recyclerView_height">136dp</dimen>
+    <dimen name="details_recyclerView_padding">8dp</dimen>
+    <dimen name="details_openGalleryButton_marginTop"></dimen>
+
+    <dimen name="details_note_paddingTop">16dp</dimen>
+    <dimen name="details_note_paddingBottom">16dp</dimen>
+    <dimen name="details_searchNote_padding">8dp</dimen>
+    <dimen name="details_addNote_paddingAndMarginStart">8dp</dimen>
+    <dimen name="details_binIconNote_marginStart"></dimen>
+
+    <dimen name="details_noteDeleteMessage_paddingAndMarginBottom">8dp</dimen>
+    <dimen name="details_NoteRecyclerView_paddingTop">8dp</dimen>
+    <dimen name="details_NoteRecyclerView_paddingBottom">16dp</dimen>
+
+    ---------------------------------------------------------------activity_gallery
+
+    <dimen name="gallery_navHeight">56dp</dimen>
+    <dimen name="gallery_navPadding">8dp</dimen>
+
+    <dimen name="gallery_backArrow_dimens">48dp</dimen>
+
+    <dimen name="gallery_titleTextSize">24sp</dimen>
+
+    <dimen name="gallery_binMessage_padding">8dp</dimen>
+    <dimen name="gallery_binIcon_dimens">40dp</dimen>
+    <dimen name="gallery_binIcon_MarginStart">6dp</dimen>
+    <dimen name="gallery_deleteMessage_MarginStart">8dp</dimen>
+    <dimen name="gallery_RecyclerView_Height">0dp</dimen>
+
+    ---------------------------------------------------------------item_gallery_photo
+
+    <dimen name="item_gallery_marginAndRadius">4dp</dimen>
+    <dimen name="item_gallery_contentPadding">20dp</dimen>
+    <dimen name="item_gallery_imageDimens">100dp</dimen>
+
+    ---------------------------------------------------------------note_item
+
+    <dimen name="note_item_MarginStratEnd">16dp</dimen>
+    <dimen name="note_item_MarginTop">10dp</dimen>
+    <dimen name="note_item_CornerRadius">4dp</dimen>
+    <dimen name="note_item_contentPadding">5dp</dimen>
+    <dimen name="note_item_textSize">14sp</dimen>
+
+    ---------------------------------------------------------------note_item
+
+    <dimen name="photo_item_dimens">140pd</dimen>
+    <dimen name="photo_item_margin">4dp</dimen>
+    <dimen name="photo_item_cornerRadius">8dp</dimen>
+    <dimen name="photo_item_padding">20dp</dimen>
 
     ---------------------------------------------------------------fragments
 
@@ -86,6 +167,7 @@
     <dimen name="fragment_datePickers_marginTop">16dp</dimen>
     <dimen name="fragment_datePickers_width">200dp</dimen>
     <dimen name="fragment_datePickers_height">400dp</dimen>
+    <dimen name="fragment_datePickers_padding">16dp</dimen>
 
     <dimen name="fragment_previewImg_dimens">150dp</dimen>
     <dimen name="fragment_previeImg_marginTop">12dp</dimen>

@@ -3,18 +3,18 @@
     android:id="@+id/noteCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    app:cardCornerRadius="4dp"
+    android:layout_marginTop="@dimen/note_item_MarginTop"
+    android:layout_marginStart="@dimen/note_item_MarginStratEnd"
+    android:layout_marginEnd="@dimen/note_item_MarginStratEnd"
+    app:cardCornerRadius="@dimen/note_item_CornerRadius"
     app:cardUseCompatPadding="true"
-    app:contentPadding="5dp">
+    app:contentPadding="@dimen/note_item_contentPadding">
 
     <TextView
         android:id="@+id/noteTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="@dimen/note_item_textSize" />
 
 </androidx.cardview.widget.CardView>

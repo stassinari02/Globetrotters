@@ -16,8 +16,8 @@
             android:id="@+id/startDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Seleziona Data Inizio"
+            android:padding="@dimen/fragment_datePickers_padding"
+            android:text="@string/fragment_date_Start"
             android:background="?attr/selectableItemBackground"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -25,8 +25,8 @@
             android:id="@+id/endDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Seleziona Data Fine"
+            android:padding="@dimen/fragment_datePickers_padding"
+            android:text="@string/fragment_date_End"
             android:background="?attr/selectableItemBackground"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 

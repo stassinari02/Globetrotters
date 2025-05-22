@@ -9,20 +9,20 @@
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Cerca città…" />
+        android:queryHint="@string/map_Searchbar" />
 
     <Button
         android:id="@+id/confirmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="56dp"
-        android:paddingHorizontal="32dp"
-        android:textSize="18sp"
-        android:text="Conferma posizione"
+        android:minHeight="@dimen/map_confirmButton_minHeight"
+        android:paddingHorizontal="@dimen/map_paddingOrizzontal"
+        android:textSize="@dimen/map_confirmButton_textsize"
+        android:text="@string/map_confirmButton"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="@dimen/map_confirmButton_marginBottom"
         android:visibility="gone"
-        android:elevation="8dp" />
+        android:elevation="@dimen/map_confitmButton_elevation" />
 
     <!-- Frammento di Google Maps -->
     <fragment

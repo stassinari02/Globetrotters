@@ -3,14 +3,14 @@
     android:id="@+id/galleryCard"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="4dp"
+    android:layout_margin="@dimen/item_gallery_marginAndRadius"
+    app:cardCornerRadius="@dimen/item_gallery_marginAndRadius"
     app:cardUseCompatPadding="true"
-    app:contentPadding="20dp">
+    app:contentPadding="@dimen/item_gallery_contentPadding">
 
     <ImageView
         android:id="@+id/galleryImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/item_gallery_imageDimens"
+        android:layout_height="@dimen/item_gallery_imageDimens"
         android:scaleType="centerCrop" />
 </androidx.cardview.widget.CardView>

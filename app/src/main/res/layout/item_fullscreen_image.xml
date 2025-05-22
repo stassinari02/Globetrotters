@@ -7,5 +7,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        android:contentDescription="full image" />
+        android:contentDescription="@string/item_fullscreen_description" />
 </FrameLayout>
