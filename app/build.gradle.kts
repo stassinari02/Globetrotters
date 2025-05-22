@@ -57,7 +57,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.play.services.location) // Usa Material 3 invece di Material 1.9.0
+    implementation(libs.play.services.location)
+    implementation(libs.filament.android) // Usa Material 3 invece di Material 1.9.0
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -108,5 +109,7 @@ dependencies {
 
     implementation ("androidx.preference:preference-ktx:1.2.1")
 
+    implementation("com.github.bumptech.glide:glide:4.14.2")
+    ksp("com.github.bumptech.glide:ksp:4.14.2")
 
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Intestazione: back-arrow a sinistra, titolo centrato nella schermata -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:padding="8dp">
+
+        <!-- Back arrow ancorata a sinistra -->
+        <fragment
+            android:id="@+id/backArrowFragment"
+            android:name="com.example.globetrotters.fragments.BackArrowFragment"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start|center_vertical" />
+
+        <!-- Titolo centrato orizzontalmente -->
+        <TextView
+            android:id="@+id/galleryTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Titolo Viaggio"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+    </FrameLayout>
+
+    <!-- Icona cestino e messaggio -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/galleryDeleteIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bin_icon"
+            android:contentDescription="Elimina foto"
+            app:tint="@android:color/black" />
+
+        <TextView
+            android:id="@+id/galleryDeleteModeMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center_vertical"
+            android:text="Seleziona le foto da eliminare, poi riclicca sul cestino"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!-- Griglia delle foto -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/galleryRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

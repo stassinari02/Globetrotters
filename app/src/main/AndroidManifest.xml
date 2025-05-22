@@ -25,9 +25,17 @@
         android:theme="@style/Theme.Globetrotters"
         tools:targetApi="31">
         <activity
-            android:name=".AddTravelActivity"
+            android:name=".GalleryActivity"
             android:exported="false" />
-        <!-- Splash Screen -->
+        <activity
+            android:name=".FullScreenPhotoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TravelDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddTravelActivity"
+            android:exported="false" /> <!-- Splash Screen -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"

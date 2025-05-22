@@ -1,6 +1,6 @@
 package com.example.globetrotters.adapters
 
-import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.globetrotters.R
+import com.example.globetrotters.TravelDetailsActivity
 import com.example.globetrotters.database.TravelEntity
 
 class TravelAdapter(
@@ -32,15 +33,20 @@ class TravelAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.travel_item, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.travel_item, parent, false)
         return TravelViewHolder(view)
     }
 
+    // TravelAdapter.kt
     override fun onBindViewHolder(holder: TravelViewHolder, position: Int) {
         val travel = travelList[position]
+
+        // Titolo e date
         holder.titleText.text = travel.title
         holder.dateText.text = travel.dateRange
 
+        // Immagine di copertina (opzionale)
         val imageView = holder.itemView.findViewById<ImageView>(R.id.travelImage)
         if (!travel.photoUri.isNullOrEmpty()) {
             imageView.setImageURI(Uri.parse(travel.photoUri))
@@ -48,44 +54,45 @@ class TravelAdapter(
             imageView.setImageResource(android.R.color.darker_gray)
         }
 
-        val isSelected = selectedItems.contains(position)
-        val cardView = holder.itemView as androidx.cardview.widget.CardView
-        cardView.setCardBackgroundColor(
-            if (isSelected) ContextCompat.getColor(holder.itemView.context, R.color.teal_200)
-            else ContextCompat.getColor(holder.itemView.context, R.color.white)
-        )
+        // Colore della card in modalità selezione
+        val cardBackground = if (selectedItems.contains(position))
+            R.color.teal_200 else android.R.color.white
+        (holder.itemView as androidx.cardview.widget.CardView)
+            .setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, cardBackground))
 
         holder.itemView.setOnClickListener {
             if (selectionMode) {
-                val selected = selectedItems.contains(position)
-                if (selected) selectedItems.remove(position) else selectedItems.add(position)
+                // Toggle selezione
+                val wasSelected = selectedItems.contains(position)
+                if (wasSelected) selectedItems.remove(position) else selectedItems.add(position)
                 notifyItemChanged(position)
-                onItemSelected?.invoke(position, !selected)
+                onItemSelected?.invoke(position, !wasSelected)
+            } else {
+                // APRE TravelDetailsActivity passando ID e titolo
+                val ctx = holder.itemView.context
+                val intent = Intent(ctx, TravelDetailsActivity::class.java).apply {
+                    putExtra("travel_id", travel.id)           // ← ID fondamentale
+                    putExtra("travel_title", travel.title)
+                }
+                ctx.startActivity(intent)
             }
         }
 
         holder.itemView.setOnLongClickListener {
-            showDeleteDialog(holder.itemView.context, travel)
+            // Dialog per cancellazione singola
+            val msg = SpannableString("Vuoi eliminare \"${travel.title}\"?")
+            val start = msg.indexOf(travel.title)
+            msg.setSpan(StyleSpan(Typeface.BOLD), start, start + travel.title.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            AlertDialog.Builder(holder.itemView.context)
+                .setTitle("Eliminare vacanza")
+                .setMessage(msg)
+                .setPositiveButton("Si") { _, _ -> onDeleteRequest(travel) }
+                .setNegativeButton("No", null)
+                .show()
             true
         }
     }
 
-    private fun showDeleteDialog(context: Context, travel: TravelEntity) {
-        val message = SpannableString("Vuoi eliminare \"${travel.title}\"?")
-        val start = message.indexOf(travel.title)
-        val end = start + travel.title.length
-        message.setSpan(StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        AlertDialog.Builder(context)
-            .setTitle("Eliminare vacanza")
-            .setMessage(message)
-            .setPositiveButton("Si") { dialog, _ ->
-                onDeleteRequest(travel)
-                dialog.dismiss()
-            }
-            .setNegativeButton("No", null)
-            .show()
-    }
 
     override fun getItemCount(): Int = travelList.size
 
@@ -101,10 +108,6 @@ class TravelAdapter(
         notifyDataSetChanged()
     }
 
-    fun getSelectedItems(): List<TravelEntity> {
-        return selectedItems.mapNotNull { position ->
-            travelList.getOrNull(position)
-        }
-    }
-
+    fun getSelectedItems(): List<TravelEntity> =
+        selectedItems.mapNotNull { travelList.getOrNull(it) }
 }
