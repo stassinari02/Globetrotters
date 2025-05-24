@@ -10,12 +10,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -50,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         // Database & adapter
         db = TravelDatabase.getDatabase(this)
         adapter = TravelAdapter(emptyList()) { travel ->
-            // single-delete callback from adapter
             lifecycleScope.launch {
                 db.travelDao().deleteTravel(travel)
             }
@@ -80,10 +74,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddTravelActivity::class.java))
         }
 
-        // Check needed permissions
+        // Map icon click → open MapViewActivity
+        findViewById<ImageView>(R.id.mapIcon).setOnClickListener {
+            startActivity(Intent(this, MapViewActivity::class.java))
+        }
+
+        // Check permissions
         checkPermissions()
 
-        // Delete-mode icon & logic
+        // Delete icon and delete mode
         val deleteIcon: ImageView = findViewById(R.id.deleteIcon)
         val deleteMessage: TextView = findViewById(R.id.deleteModeMessage)
         val superTitle: TextView = findViewById(R.id.superTitleTextView)
@@ -91,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
         deleteIcon.setOnClickListener {
             if (!deleteModeActive) {
-                // enter multi-delete mode
+                // Enter delete mode
                 deleteModeActive = true
                 selectedItems.clear()
                 deleteMessage.visibility = View.VISIBLE
@@ -99,12 +98,10 @@ class MainActivity : AppCompatActivity() {
                     if (isSelected) selectedItems.add(index)
                     else selectedItems.remove(index)
                 }
-                // tap outside to cancel
                 contentTop.setOnClickListener { exitDeleteMode() }
             } else {
-                // already in delete mode
+                // Already in delete mode
                 if (selectedItems.isNotEmpty()) {
-                    // confirm deletion
                     val toDelete = adapter.getSelectedItems()
                     val titles = toDelete.map { it.title }
                     val msgText = "Sicuro di voler eliminare: ${titles.joinToString(", ")}"
@@ -133,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         .show()
                 } else {
-                    // nothing selected → toast & exit mode
+                    // Nessuna selezione → toast e uscita da delete mode
                     Toast.makeText(this, "Nessun viaggio selezionato", Toast.LENGTH_SHORT).show()
                     exitDeleteMode()
                 }
@@ -146,7 +143,6 @@ class MainActivity : AppCompatActivity() {
         selectedItems.clear()
         findViewById<TextView>(R.id.deleteModeMessage).visibility = View.GONE
         adapter.setSelectionMode(false, null)
-        // disable outside-click cancel
         val superTitle: TextView = findViewById(R.id.superTitleTextView)
         (superTitle.parent as LinearLayout).setOnClickListener(null)
     }
@@ -156,9 +152,11 @@ class MainActivity : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED
         ) perms.add(Manifest.permission.CAMERA)
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
         ) perms.add(Manifest.permission.ACCESS_FINE_LOCATION)
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
             != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -169,6 +167,7 @@ class MainActivity : AppCompatActivity() {
             else
                 perms.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
+
         if (perms.isNotEmpty()) {
             ActivityCompat.requestPermissions(this, perms.toTypedArray(), PERMISSIONS_REQUEST_CODE)
         }
