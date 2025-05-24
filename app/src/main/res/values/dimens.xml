@@ -155,7 +155,7 @@
 
     ---------------------------------------------------------------note_item
 
-    <dimen name="photo_item_dimens">140pd</dimen>
+    <dimen name="photo_item_dimens">140dp</dimen>
     <dimen name="photo_item_margin">4dp</dimen>
     <dimen name="photo_item_cornerRadius">8dp</dimen>
     <dimen name="photo_item_padding">20dp</dimen>
