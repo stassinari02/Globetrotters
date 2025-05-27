@@ -97,11 +97,13 @@
 
     <dimen name="details_navBar_padding">16dp</dimen>
     <dimen name="details_backArrow_dimens">48dp</dimen>
-    <dimen name="details_title_textSize">24sp</dimen>
+    <dimen name="details_title_textSize">32sp</dimen>
+
 
     <dimen name="details_Buttons_padding">16dp</dimen>
     <dimen name="details_Buttons_marginTop">72dp</dimen>
     <dimen name="details_binIcon_dimens">24dp</dimen>
+    <dimen name="details_binIcon_dimens_large">40dp</dimen>
     <dimen name="details_LoadPhotoButton_marginStart">16dp</dimen>
     <dimen name="details_binIcon_marginStart">16dp</dimen>
 

@@ -45,17 +45,18 @@
 
     ---------------------------------------------------------------------------activity_travel_details
 
-    <string name="details_title">Titolo Viaggio</string>
-    <string name="details_photoButton">Scatta Foto</string>
-    <string name="details_loadPhoto">Carica Foto</string>
+    <string name="details_title">Dettagli Viaggio</string>
+    <string name="details_photoButton">Scatta foto</string>
+    <string name="details_loadPhoto">Carica foto</string>
     <string name="details_deletePhoto">Elimina foto</string>
-    <string name="details_deleteMessage">Seleziona le foto da eliminare e premi di nuovo il cestino</string>
-    <string name="details_photos">Photos:</string>
-    <string name="details_galleryButton">Vai a galleria</string>
-    <string name="details_searchNote">Cerca note...</string>
-    <string name="details_addNote">Aggiungi nota</string>
+    <string name="details_deleteMessage">Seleziona le foto da eliminare, poi tocca di nuovo il cestino</string>
+    <string name="details_photos">Le tue foto</string>
+    <string name="details_galleryButton">Apri la galleria</string>
+    <string name="details_searchNote">Cerca una nota...</string>
+    <string name="details_addNote">Nuova nota</string>
     <string name="details_deleteNote">Elimina note</string>
-    <string name="details_deleteNoteMessage">Seleziona le note da eliminare e premi di nuovo il cestino</string>
+    <string name="details_deleteNoteMessage">Seleziona le note da eliminare, poi tocca di nuovo il cestino</string>
+
 
 
     ---------------------------------------------------------------------------activity_gallery

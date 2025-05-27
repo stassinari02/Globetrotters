@@ -72,12 +72,12 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Material Design 3
-    implementation("androidx.compose.material3:material3:1.2.0")
+    implementation("androidx.compose.material3:material3:1.3.2")
 
-    implementation ("com.google.android.material:material:1.11.0")
+    implementation ("com.google.android.material:material:1.12.0")
 
     //per room
-    val room_version = "2.7.0"
+    val room_version = "2.7.1"
 
     implementation("androidx.room:room-runtime:$room_version")
 
