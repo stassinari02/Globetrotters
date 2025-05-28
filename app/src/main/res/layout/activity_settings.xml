@@ -32,51 +32,6 @@
         android:layout_marginTop="@dimen/settings_buttonPermission_marginTop"
         android:gravity="center"/>
 
-    <!-- Sezione Tema -->
-    <TextView
-        android:id="@+id/theme_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_themes"
-        android:textSize="@dimen/settings_themes_textSize"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/settings_themes_marginTop"
-        android:textColor="?android:attr/textColorPrimary"/>
-
-    <!-- Sezione Switch Tema Chiaro/Scuro -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/settings_chiaro_scuro_padding"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_chiaro"
-            android:textSize="@dimen/settings_chiaro_scuro_textSize"
-            android:layout_marginEnd="@dimen/settings_chiaro_scuro_marginEnd"
-            android:textColor="?android:attr/textColorSecondary" />
-
-        <Switch
-            android:id="@+id/themeSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:gravity="center"
-            android:minWidth="@dimen/settings_switch_minHeight"
-            android:minHeight="@dimen/settings_switch_minHeight"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_scuro"
-            android:textSize="@dimen/settings_chiaro_scuro_textSize"
-            android:layout_marginStart="@dimen/settings_chiaro_scuro_marginStart"
-            android:textColor="?android:attr/textColorSecondary" />
-    </LinearLayout>
-
     <!-- Sezione Versione dell'app -->
     <TextView
         android:id="@+id/version_label"
