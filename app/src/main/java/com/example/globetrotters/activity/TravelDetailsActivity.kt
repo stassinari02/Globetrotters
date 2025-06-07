@@ -1,4 +1,4 @@
-package com.example.globetrotters
+package com.example.globetrotters.activity
 
 import android.Manifest
 import android.app.AlertDialog
@@ -7,40 +7,52 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.globetrotters.R
 import com.example.globetrotters.adapters.NoteAdapter
 import com.example.globetrotters.adapters.PhotoAdapter
-import com.example.globetrotters.database.NoteEntity
 import com.example.globetrotters.database.PhotoEntity
-import com.example.globetrotters.database.TravelDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.globetrotters.database.NoteEntity
+import com.example.globetrotters.viewmodel.PhotoViewModel
+import com.example.globetrotters.viewmodel.NoteViewModel
 import java.io.File
 
 class TravelDetailsActivity : AppCompatActivity() {
 
-    private lateinit var db: TravelDatabase
-    private var travelId: Int = 0
+    companion object {
+        private const val PERMISSIONS_REQUEST_CODE_PHOTO = 200
+    }
 
+    private var travelId: Int = 0
     private lateinit var photoAdapter: PhotoAdapter
     private var currentPhotoUri: Uri? = null
-
     private lateinit var noteAdapter: NoteAdapter
 
-    // launcher per scatto e pick
-    private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) currentPhotoUri?.let { savePhoto(it) }
+    private lateinit var photoViewModel: PhotoViewModel
+    private lateinit var noteViewModel: NoteViewModel
+
+    private val takePhotoLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            currentPhotoUri?.let { savePhoto(it) }
+        }
     }
-    private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+
+    private val pickPhotoLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
         uri?.let {
             val dst = File(filesDir, "photo_${System.currentTimeMillis()}.jpg")
             contentResolver.openInputStream(it)?.use { input ->
@@ -54,37 +66,44 @@ class TravelDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_details)
 
-        db = TravelDatabase.getDatabase(this)
+        // Inizializza ViewModel
+        photoViewModel = ViewModelProvider(this).get(PhotoViewModel::class.java)
+        noteViewModel  = ViewModelProvider(this).get(NoteViewModel::class.java)
 
         travelId = intent.getIntExtra("travel_id", 0)
         findViewById<TextView>(R.id.detailTitleTextView).text =
             intent.getStringExtra("travel_title").orEmpty()
 
-        // — FOTO —
         setupPhotoSection()
-        // — NOTE —
         setupNoteSection()
 
         findViewById<Button>(R.id.openGalleryButton).setOnClickListener {
             startActivity(Intent(this, GalleryActivity::class.java).apply {
                 putExtra("travel_id", travelId)
-                putExtra("travel_title", findViewById<TextView>(R.id.detailTitleTextView).text.toString())
+                putExtra(
+                    "travel_title",
+                    findViewById<TextView>(R.id.detailTitleTextView).text.toString()
+                )
             })
         }
     }
 
     private fun setupPhotoSection() {
         val photoRecycler = findViewById<RecyclerView>(R.id.photosRecyclerView)
-        photoRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        photoRecycler.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
         photoAdapter = PhotoAdapter(emptyList()) { pos ->
             val uris = photoAdapter.getPhotoUris().toTypedArray()
-            startActivity(Intent(this, FullScreenPhotoActivity::class.java).apply {
-                putExtra("photo_uris", uris)
-                putExtra("start_index", pos)
-            })
+            startActivity(
+                Intent(this, FullScreenPhotoActivity::class.java).apply {
+                    putExtra("photo_uris", uris)
+                    putExtra("start_index", pos)
+                }
+            )
         }.also {
             it.onSingleDelete = { photo ->
-                lifecycleScope.launch { db.photoDao().deletePhoto(photo) }
+                photoViewModel.deletePhoto(photo)
             }
         }
         photoRecycler.adapter = photoAdapter
@@ -108,8 +127,8 @@ class TravelDetailsActivity : AppCompatActivity() {
                         .setTitle("Conferma eliminazione")
                         .setMessage("Sicuro di voler eliminare ${selected.size} foto?")
                         .setPositiveButton("Si") { _, _ ->
-                            lifecycleScope.launch {
-                                photoAdapter.getSelectedItems().forEach { db.photoDao().deletePhoto(it) }
+                            photoAdapter.getSelectedItems().forEach {
+                                photoViewModel.deletePhoto(it)
                             }
                             exitPhotoDeleteMode(deleteMsg)
                             deleteMode = false
@@ -127,26 +146,57 @@ class TravelDetailsActivity : AppCompatActivity() {
             }
         }
 
-        db.photoDao().getPhotosForTravel(travelId).observe(this) {
+        // Osserva LiveData dal ViewModel
+        photoViewModel.getPhotosForTravel(travelId).observe(this) {
             photoAdapter.updateList(it)
         }
 
         findViewById<Button>(R.id.takePhotoButton).setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 val file = File.createTempFile("travel_", ".jpg", cacheDir)
-                currentPhotoUri = FileProvider.getUriForFile(this, "$packageName.provider", file)
+                currentPhotoUri =
+                    FileProvider.getUriForFile(this, "$packageName.provider", file)
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
                     putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
                 }
                 takePhotoLauncher.launch(intent)
             } else {
-                Toast.makeText(this, "Permesso fotocamera non concesso", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permesso fotocamera non concesso", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
+
         findViewById<Button>(R.id.loadPhotoButton).setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED
-            ) {
+            val readPerm = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                Manifest.permission.READ_MEDIA_IMAGES
+            } else {
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            }
+
+            if (ContextCompat.checkSelfPermission(this, readPerm) == PackageManager.PERMISSION_GRANTED) {
+                pickPhotoLauncher.launch("image/*")
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(readPerm),
+                    PERMISSIONS_REQUEST_CODE_PHOTO
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONS_REQUEST_CODE_PHOTO) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 pickPhotoLauncher.launch("image/*")
             } else {
                 Toast.makeText(this, "Permesso galleria non concesso", Toast.LENGTH_SHORT).show()
@@ -160,18 +210,8 @@ class TravelDetailsActivity : AppCompatActivity() {
     }
 
     private fun savePhoto(uri: Uri) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                db.photoDao().insertPhoto(PhotoEntity(travelId = travelId, uri = uri.toString()))
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@TravelDetailsActivity, "Foto salvata", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@TravelDetailsActivity, "Errore salvataggio", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
+        photoViewModel.insertPhoto(PhotoEntity(travelId = travelId, uri = uri.toString()))
+        Toast.makeText(this, "Foto salvata", Toast.LENGTH_SHORT).show()
     }
 
     private fun setupNoteSection() {
@@ -179,37 +219,31 @@ class TravelDetailsActivity : AppCompatActivity() {
         notesRecycler.layoutManager = LinearLayoutManager(this)
         noteAdapter = NoteAdapter(emptyList()).also {
             it.onSingleDelete = { note ->
-                lifecycleScope.launch { db.noteDao().deleteNote(note) }
+                noteViewModel.deleteNote(note)
             }
         }
         notesRecycler.adapter = noteAdapter
 
-        val noteDao = db.noteDao()
-        noteDao.getNotesForTravel(travelId).observe(this) {
-            noteAdapter.updateList(it)
-        }
+        // Osserva tutte le note inizialmente
+        noteViewModel.getNotesForTravel(travelId)
+            .observe(this) { noteAdapter.updateList(it) }
 
+        // Search-as-you-type per le note
         val searchBar = findViewById<EditText>(R.id.searchNoteEditText)
-        // apri dialog per la ricerca
-        searchBar.setOnClickListener {
-            val dialogInput = EditText(this).apply {
-                setText(searchBar.text.toString())
-                hint = "Cerca note..."
-            }
-            AlertDialog.Builder(this)
-                .setTitle("Cerca Note")
-                .setView(dialogInput)
-                .setNegativeButton("Annulla", null)
-                .setPositiveButton("Cerca") { _, _ ->
-                    val q = dialogInput.text.toString().trim()
-                    if (q.isEmpty()) {
-                        noteDao.getNotesForTravel(travelId).observe(this) { noteAdapter.updateList(it) }
-                    } else {
-                        noteDao.searchNotes(travelId, q).observe(this) { noteAdapter.updateList(it) }
-                    }
+        searchBar.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val q = s?.toString()?.trim().orEmpty()
+                if (q.isEmpty()) {
+                    noteViewModel.getNotesForTravel(travelId)
+                        .observe(this@TravelDetailsActivity) { noteAdapter.updateList(it) }
+                } else {
+                    noteViewModel.searchNotes(travelId, q)
+                        .observe(this@TravelDetailsActivity) { noteAdapter.updateList(it) }
                 }
-                .show()
-        }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        })
 
         findViewById<ImageButton>(R.id.addNoteButton).setOnClickListener {
             val input = EditText(this).apply { hint = "Scrivi la tua nota" }
@@ -219,8 +253,8 @@ class TravelDetailsActivity : AppCompatActivity() {
                 .setNegativeButton("Annulla", null)
                 .setPositiveButton("Aggiungi") { _, _ ->
                     val text = input.text.toString().trim()
-                    if (text.isNotEmpty()) lifecycleScope.launch {
-                        noteDao.insertNote(NoteEntity(travelId = travelId, text = text))
+                    if (text.isNotEmpty()) {
+                        noteViewModel.insertNote(NoteEntity(travelId = travelId, text = text))
                     }
                 }
                 .show()
@@ -245,8 +279,8 @@ class TravelDetailsActivity : AppCompatActivity() {
                         .setTitle("Conferma eliminazione")
                         .setMessage("Vuoi cancellare queste ${selectedNote.size} note?")
                         .setPositiveButton("Si") { _, _ ->
-                            lifecycleScope.launch {
-                                noteAdapter.getSelectedItems().forEach { db.noteDao().deleteNote(it) }
+                            noteAdapter.getSelectedItems().forEach {
+                                noteViewModel.deleteNote(it)
                             }
                             exitNoteDeleteMode(noteDeleteMsg)
                             noteDeleteMode = false

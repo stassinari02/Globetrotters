@@ -1,4 +1,4 @@
-package com.example.globetrotters
+package com.example.globetrotters.activity
 
 import android.app.Activity
 import android.content.Intent

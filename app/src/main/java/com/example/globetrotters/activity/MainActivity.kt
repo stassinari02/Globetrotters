@@ -1,4 +1,4 @@
-package com.example.globetrotters
+package com.example.globetrotters.activity
 
 import android.Manifest
 import android.app.AlertDialog
@@ -16,13 +16,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.globetrotters.R
 import com.example.globetrotters.adapters.TravelAdapter
-import com.example.globetrotters.database.TravelDatabase
 import com.example.globetrotters.database.TravelEntity
-import kotlinx.coroutines.launch
+import com.example.globetrotters.viewmodel.TravelViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,28 +31,27 @@ class MainActivity : AppCompatActivity() {
     private var fullTravelList: List<TravelEntity> = emptyList()
     private var deleteModeActive = false
     private var selectedItems = mutableSetOf<Int>()
-    private lateinit var db: TravelDatabase
+
+    private lateinit var travelViewModel: TravelViewModel
+
     private val PERMISSIONS_REQUEST_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // RecyclerView setup
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Database & adapter
-        db = TravelDatabase.getDatabase(this)
+        travelViewModel = ViewModelProvider(this)
+            .get(TravelViewModel::class.java)
+
         adapter = TravelAdapter(emptyList()) { travel ->
-            lifecycleScope.launch {
-                db.travelDao().deleteTravel(travel)
-            }
+            travelViewModel.deleteTravel(travel)
         }
         recyclerView.adapter = adapter
 
-        // Observe all travels
-        db.travelDao().getAllTravels().observe(this, Observer { travels ->
+        travelViewModel.allTravels.observe(this, Observer { travels ->
             fullTravelList = travels
             adapter.updateList(travels)
         })
@@ -64,22 +63,17 @@ class MainActivity : AppCompatActivity() {
             adapter.updateList(filtered)
         }
 
-        // Settings icon
+        // Settings, Add, Map icons rimangono identici
         findViewById<ImageView>(R.id.settingsIcon).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
-
-        // Add new travel button
         findViewById<Button>(R.id.addTravelButton).setOnClickListener {
             startActivity(Intent(this, AddTravelActivity::class.java))
         }
-
-        // Map icon click → open MapViewActivity
         findViewById<ImageView>(R.id.mapIcon).setOnClickListener {
             startActivity(Intent(this, MapViewActivity::class.java))
         }
 
-        // Check permissions
         checkPermissions()
 
         // Delete icon and delete mode
@@ -90,7 +84,6 @@ class MainActivity : AppCompatActivity() {
 
         deleteIcon.setOnClickListener {
             if (!deleteModeActive) {
-                // Enter delete mode
                 deleteModeActive = true
                 selectedItems.clear()
                 deleteMessage.visibility = View.VISIBLE
@@ -100,7 +93,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 contentTop.setOnClickListener { exitDeleteMode() }
             } else {
-                // Already in delete mode
                 if (selectedItems.isNotEmpty()) {
                     val toDelete = adapter.getSelectedItems()
                     val titles = toDelete.map { it.title }
@@ -118,9 +110,7 @@ class MainActivity : AppCompatActivity() {
                         .setMessage(spannable)
                         .setPositiveButton("Si") { dialog, _ ->
                             val ids = toDelete.map { it.id }
-                            lifecycleScope.launch {
-                                db.travelDao().deleteTravelsByIds(ids)
-                            }
+                            travelViewModel.deleteTravelsByIds(ids)
                             exitDeleteMode()
                             dialog.dismiss()
                         }
@@ -130,7 +120,6 @@ class MainActivity : AppCompatActivity() {
                         }
                         .show()
                 } else {
-                    // Nessuna selezione → toast e uscita da delete mode
                     Toast.makeText(this, "Nessun viaggio selezionato", Toast.LENGTH_SHORT).show()
                     exitDeleteMode()
                 }

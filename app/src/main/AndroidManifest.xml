@@ -25,19 +25,19 @@
         android:theme="@style/Theme.Globetrotters"
         tools:targetApi="31">
         <activity
-            android:name=".GalleryActivity"
+            android:name=".activity.GalleryActivity"
             android:exported="false" />
         <activity
-            android:name=".FullScreenPhotoActivity"
+            android:name=".activity.FullScreenPhotoActivity"
             android:exported="false" />
         <activity
-            android:name=".TravelDetailsActivity"
+            android:name=".activity.TravelDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".AddTravelActivity"
-            android:exported="false" /> <!-- Splash Screen -->
+            android:name=".activity.AddTravelActivity"
+            android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Globetrotters.Splash">
             <intent-filter>
@@ -46,12 +46,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- SettingsActivity -->
-        <activity android:name=".SettingsActivity" /> <!-- MapViewActivity -->
+        <activity android:name=".activity.SettingsActivity" /> <!-- MapViewActivity -->
         <activity
-            android:name=".MapViewActivity"
+            android:name=".activity.MapViewActivity"
             android:exported="true" /> <!-- Main Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Globetrotters"

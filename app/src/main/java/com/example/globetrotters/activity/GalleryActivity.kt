@@ -1,4 +1,4 @@
-package com.example.globetrotters
+package com.example.globetrotters.activity
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -8,16 +8,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.globetrotters.R
 import com.example.globetrotters.adapters.GalleryAdapter
-import com.example.globetrotters.database.TravelDatabase
-import kotlinx.coroutines.launch
+import com.example.globetrotters.database.PhotoEntity
+import com.example.globetrotters.viewmodel.PhotoViewModel
 
 class GalleryActivity : AppCompatActivity() {
 
-    private lateinit var db: TravelDatabase
+    private lateinit var photoViewModel: PhotoViewModel
     private var travelId: Int = 0
     private lateinit var galleryAdapter: GalleryAdapter
     private var deleteModeActive = false
@@ -27,7 +28,9 @@ class GalleryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gallery)
 
-        db = TravelDatabase.getDatabase(this)
+        photoViewModel = ViewModelProvider(this)
+            .get(PhotoViewModel::class.java)
+
         travelId = intent.getIntExtra("travel_id", 0)
         findViewById<TextView>(R.id.galleryTitleTextView).text =
             intent.getStringExtra("travel_title").orEmpty()
@@ -43,7 +46,8 @@ class GalleryActivity : AppCompatActivity() {
             })
         }.also {
             it.onSingleDelete = { photo ->
-                lifecycleScope.launch { db.photoDao().deletePhoto(photo) }
+
+                photoViewModel.deletePhoto(photo)
             }
         }
         galleryRecycler.adapter = galleryAdapter
@@ -65,9 +69,9 @@ class GalleryActivity : AppCompatActivity() {
                         .setTitle("Conferma eliminazione")
                         .setMessage("Vuoi cancellare queste ${selectedPhotoIndices.size} foto?")
                         .setPositiveButton("Si") { _, _ ->
-                            lifecycleScope.launch {
-                                galleryAdapter.getSelectedItems()
-                                    .forEach { db.photoDao().deletePhoto(it) }
+
+                            galleryAdapter.getSelectedItems().forEach { photo ->
+                                photoViewModel.deletePhoto(photo)
                             }
                             exitDeleteMode(deleteMsg)
                         }
@@ -82,8 +86,8 @@ class GalleryActivity : AppCompatActivity() {
             }
         }
 
-        db.photoDao().getPhotosForTravel(travelId).observe(this) {
-            galleryAdapter.updateList(it)
+        photoViewModel.getPhotosForTravel(travelId).observe(this) { photos: List<PhotoEntity> ->
+            galleryAdapter.updateList(photos)
         }
     }
 

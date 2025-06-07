@@ -15,7 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.globetrotters.R
-import com.example.globetrotters.TravelDetailsActivity
+import com.example.globetrotters.activity.TravelDetailsActivity
 import com.example.globetrotters.database.TravelEntity
 
 class TravelAdapter(
