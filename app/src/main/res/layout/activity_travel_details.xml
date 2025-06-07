@@ -120,6 +120,15 @@
                 android:layout_marginTop="@dimen/details_openGalleryButton_marginTop" />
         </LinearLayout>
 
+        <!-- Bottone Wikipedia -->
+        <Button
+            android:id="@+id/openWikipediaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/details_wikipediaButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/details_openGalleryButton_marginTop" />
+
         <!-- ● Sezione note -->
         <LinearLayout
             android:layout_width="match_parent"

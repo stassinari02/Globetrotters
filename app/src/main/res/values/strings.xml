@@ -1,50 +1,38 @@
 <resources>
     <string name="app_name">Globetrotters</string>
+
     ------------------------------------------------------------------------------activity_main
     <string name="main_app_name">Globetrotters</string>
-
     <string name="main_title">I Tuoi\nViaggi</string>
-
     <string name="main_NuovoViaggio">Nuovo Viaggio</string>
     <string name="main_search">Cerca</string>
-
     <string name="main_deleteMessage">Seleziona i viaggi che vuoi eliminare, poi riclicca sul cestino</string>
-
     <string name="main_recyclerView_description">Lista dei viaggi</string>
     <string name="main_ImgSettings_description">Settings img</string>
     <string name="main_ImgMap_description">Map img</string>
     <string name="main_ImgBin_description">Rimuovi viaggio</string>
     --------------------------------------------------------------------------activity_add_travel
-    <string name="dialog_chooseTitle">Scegli un titolo per la vacanza</string>
-
+    <string name="dialog_chooseTitle">Scrivi la città del viaggio</string>
     <string name="dialog_errorMessage">Non hai compilato tutti i campi (titolo e date)!</string>
-
     <string name="dialog_createButton">Crea</string>
-
     <string name="dialog_ButtonPosition">Aggiungi Posizione</string>
 
     --------------------------------------------------------------------------activity_add_travel
-
     <string name="map_Searchbar">Cerca Città...</string>
     <string name="map_confirmButton">Conferma posizione</string>
 
     ---------------------------------------------------------------------------activity_settings
     <string name="settings_title">Impostazioni</string>
-
     <string name="settings_permissionsButton">Gestisci Permessi</string>
-
     <string name="settings_themes">Tema</string>
     <string name="settings_chiaro">Chiaro</string>
     <string name="settings_scuro">Scuro</string>
-
     <string name="settings_app_version">Versione App</string>
     <string name="settings_version_number">1.0.0</string>
-
     <string name="settings_SendToFriends">Consiglia app agli amici</string>
     <string name="settings_FeedbackAndSupport">Feedback e Supporto</string>
 
     ---------------------------------------------------------------------------activity_travel_details
-
     <string name="details_title">Dettagli Viaggio</string>
     <string name="details_photoButton">Scatta foto</string>
     <string name="details_loadPhoto">Carica foto</string>
@@ -56,34 +44,27 @@
     <string name="details_addNote">Nuova nota</string>
     <string name="details_deleteNote">Elimina note</string>
     <string name="details_deleteNoteMessage">Seleziona le note da eliminare, poi tocca di nuovo il cestino</string>
-
-
+    <string name="details_wikipediaButton">Scopri su Wikipedia</string>
 
     ---------------------------------------------------------------------------activity_gallery
-
     <string name="gallery_title">Titolo Viaggio</string>
     <string name="gallery_deletePhoto">Elimina foto</string>
     <string name="gallery_deleteMessage">Seleziona le foto da eliminare, poi riclicca sul cestino</string>
 
     ---------------------------------------------------------------------------travel_item
-
     <string name="travel_img_description">Foto profilo</string>
 
     ---------------------------------------------------------------------------item_fullscreen_image
-
     <string name="item_fullscreen_description">full image</string>
 
     ---------------------------------------------------------------------------photo_item
-
     <string name="photo_item_description">Foto del viaggio</string>
 
     --------------------------------------------------------------------------fragments
     <string name="fragment_backArrow_description">Torna indietro</string>
-
     <string name="fragment_photo_preview_description">Preview foto profilo</string>
     <string name="fragment_photo_scatta">Scatta foto</string>
     <string name="fragment_photo_carica">Carica foto</string>
-
     <string name="fragment_date_Start">Seleziona Data Inizio</string>
     <string name="fragment_date_End">Seleziona Data Fine</string>
 

@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.globetrotters.R
@@ -27,6 +28,8 @@ import com.example.globetrotters.database.NoteEntity
 import com.example.globetrotters.viewmodel.PhotoViewModel
 import com.example.globetrotters.viewmodel.NoteViewModel
 import java.io.File
+import com.example.globetrotters.api.RetrofitInstance
+import kotlinx.coroutines.launch
 
 class TravelDetailsActivity : AppCompatActivity() {
 
@@ -85,6 +88,16 @@ class TravelDetailsActivity : AppCompatActivity() {
                     findViewById<TextView>(R.id.detailTitleTextView).text.toString()
                 )
             })
+        }
+
+        val wikipediaButton = findViewById<Button>(R.id.openWikipediaButton)
+        wikipediaButton.setOnClickListener {
+            val city = findViewById<TextView>(R.id.detailTitleTextView).text.toString().trim()
+            if (city.isNotEmpty()) {
+                fetchWikipediaIntroRetrofit(city)
+            } else {
+                Toast.makeText(this, "Titolo del viaggio non disponibile", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -303,4 +316,32 @@ class TravelDetailsActivity : AppCompatActivity() {
         msg.visibility = View.GONE
         noteAdapter.setSelectionMode(false, null)
     }
+
+    private fun fetchWikipediaIntroRetrofit(city: String) {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitInstance.wikipediaApi.getIntroExtract(titles = city)
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    val pages = body?.query?.pages
+                    if (pages != null && pages.isNotEmpty()) {
+                        val page = pages.values.first()
+                        val extract = page.extract ?: "Nessuna informazione trovata."
+                        AlertDialog.Builder(this@TravelDetailsActivity)
+                            .setTitle(city)
+                            .setMessage(extract)
+                            .setPositiveButton("OK", null)
+                            .show()
+                    } else {
+                        Toast.makeText(this@TravelDetailsActivity, "Pagina non trovata", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this@TravelDetailsActivity, "Errore API Wikipedia", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@TravelDetailsActivity, "Errore: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
 }

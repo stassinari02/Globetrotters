@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Permessi per accedere a foto -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Dichiara che l'app usa la fotocamera come hardware, ma non è obbligatoria -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Per retrofit e API -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
