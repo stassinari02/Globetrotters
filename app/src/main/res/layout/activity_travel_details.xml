@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_mountain">
 
-    <!-- ▸ Intestazione -->
+    <!-- ● Intestazione -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:textColor="@android:color/white" />
     </FrameLayout>
 
-    <!-- ▸ Contenuto principale -->
+    <!-- ● Contenuto principale -->
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                 android:layout_marginTop="@dimen/details_openGalleryButton_marginTop" />
         </LinearLayout>
 
-        <!-- Bottone Wikipedia -->
+        <!-- ● Bottone Wikipedia -->
         <Button
             android:id="@+id/openWikipediaButton"
             android:layout_width="wrap_content"
@@ -128,6 +128,16 @@
             android:text="@string/details_wikipediaButton"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/details_openGalleryButton_marginTop" />
+
+        <!-- ● Bottone Meteo -->
+        <Button
+            android:id="@+id/openWeatherButton"
+            android:layout_width="118dp"
+            android:layout_height="56dp"
+            android:background="@drawable/logo_open_weather"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/details_openGalleryButton_marginTop" />
+
 
         <!-- ● Sezione note -->
         <LinearLayout

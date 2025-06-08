@@ -30,6 +30,10 @@ import com.example.globetrotters.viewmodel.NoteViewModel
 import java.io.File
 import com.example.globetrotters.api.RetrofitInstance
 import kotlinx.coroutines.launch
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 class TravelDetailsActivity : AppCompatActivity() {
 
@@ -99,6 +103,18 @@ class TravelDetailsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Titolo del viaggio non disponibile", Toast.LENGTH_SHORT).show()
             }
         }
+
+        val weatherButton = findViewById<Button>(R.id.openWeatherButton)
+        weatherButton.setOnClickListener {
+            val city = findViewById<TextView>(R.id.detailTitleTextView).text.toString().trim()
+            if (city.isNotEmpty()) {
+                fetchWeatherInfo(city)
+            } else {
+                Toast.makeText(this, "Titolo del viaggio non disponibile", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
     }
 
     private fun setupPhotoSection() {
@@ -344,4 +360,43 @@ class TravelDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun fetchWeatherInfo(city: String) {
+        lifecycleScope.launch {
+            try {
+                val apiKey = getString(R.string.weather_api_key)
+                val response = RetrofitInstance.weatherApi.getCurrentWeather(cityName = city, apiKey = apiKey)
+
+                if (response.isSuccessful) {
+                    val weatherBody = response.body()
+                    val temp = weatherBody?.main?.temp ?: Double.NaN
+                    val humidity = weatherBody?.main?.humidity ?: -1
+                    val pressure = weatherBody?.main?.pressure ?: -1
+                    val windSpeed = weatherBody?.wind?.speed ?: Double.NaN
+                    val conditions = weatherBody?.weather?.firstOrNull()?.description ?: "N/A"
+
+                    val message = """
+                    Temperatura: $temp °C
+                    Condizioni: $conditions
+                    Umidità: $humidity %
+                    Pressione: $pressure hPa
+                    Vento: $windSpeed m/s
+                """.trimIndent()
+
+                    AlertDialog.Builder(this@TravelDetailsActivity)
+                        .setTitle("Meteo a $city")
+                        .setMessage(message)
+                        .setPositiveButton("OK", null)
+                        .show()
+                } else {
+                    Toast.makeText(this@TravelDetailsActivity, "Errore API Meteo", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: IOException) {
+                Toast.makeText(this@TravelDetailsActivity, "Errore di rete: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            } catch (e: HttpException) {
+                Toast.makeText(this@TravelDetailsActivity, "Errore HTTP: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(this@TravelDetailsActivity, "Errore: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
+            }
+        }
 }
