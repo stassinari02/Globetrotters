@@ -17,6 +17,7 @@
         android:padding="@dimen/travel_cards_padding"
         android:background="@android:color/transparent">
 
+        <!-- ShapeableImageView usata per la foto del viaggio -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/travelImage"
             android:layout_width="@dimen/travel_img_width"
@@ -30,6 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:shapeAppearanceOverlay="@style/RoundedImageStyle"/>
 
+        <!-- TextView per il titolo del viaggio -->
         <TextView
             android:id="@+id/travelTitle"
             android:layout_width="0dp"
@@ -42,6 +44,7 @@
             app:layout_constraintStart_toEndOf="@id/travelImage"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- TextView per le date del viaggio -->
         <TextView
             android:id="@+id/travelDates"
             android:layout_width="0dp"

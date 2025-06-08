@@ -6,6 +6,7 @@
     android:gravity="center"
     android:layout_marginTop="@dimen/fragment_previeImg_marginTop">
 
+    <!-- Anteprima foto con dimensioni fisse e sfondo -->
     <ImageView
         android:id="@+id/photoPreview"
         android:layout_width="@dimen/fragment_previewImg_dimens"
@@ -16,12 +17,14 @@
         android:layout_marginBottom="@dimen/fragment_previeImg_MarginBottom"
         android:contentDescription="@string/fragment_photo_preview_description" />
 
+    <!-- Layout orizzontale centrato per i due pulsanti -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center">
 
+        <!-- Pulsante per scattare una foto -->
         <Button
             android:id="@+id/takePhotoButton"
             android:layout_width="wrap_content"
@@ -29,6 +32,7 @@
             android:text="@string/fragment_photo_scatta"
             android:layout_marginEnd="@dimen/fragment_Buttons_marginBetween" />
 
+        <!-- Pulsante per caricare una foto esistente -->
         <Button
             android:id="@+id/loadPhotoButton"
             android:layout_width="wrap_content"

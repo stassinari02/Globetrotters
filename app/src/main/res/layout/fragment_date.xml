@@ -6,12 +6,14 @@
     android:gravity="center"
     android:layout_marginTop="@dimen/fragment_datePickers_marginTop">
 
+    <!-- Contenitore orizzontale per le due TextView -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center">
 
+        <!-- TextView per la data di inizio -->
         <TextView
             android:id="@+id/startDateText"
             android:layout_width="wrap_content"
@@ -21,6 +23,7 @@
             android:background="?attr/selectableItemBackground"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <!-- TextView per la data di fine -->
         <TextView
             android:id="@+id/endDateText"
             android:layout_width="wrap_content"

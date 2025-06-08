@@ -138,14 +138,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/details_openGalleryButton_marginTop" />
 
-        <ProgressBar
-            android:id="@+id/progressBarWiki"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
-
         <!-- ● Sezione note -->
         <LinearLayout
             android:layout_width="match_parent"
