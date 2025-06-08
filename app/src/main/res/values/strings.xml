@@ -11,6 +11,7 @@
     <string name="main_ImgSettings_description">Settings img</string>
     <string name="main_ImgMap_description">Map img</string>
     <string name="main_ImgBin_description">Rimuovi viaggio</string>
+
     --------------------------------------------------------------------------activity_add_travel
     <string name="dialog_chooseTitle">Scrivi la città del viaggio</string>
     <string name="dialog_errorMessage">Non hai compilato tutti i campi (titolo e date)!</string>
@@ -24,9 +25,6 @@
     ---------------------------------------------------------------------------activity_settings
     <string name="settings_title">Impostazioni</string>
     <string name="settings_permissionsButton">Gestisci Permessi</string>
-    <string name="settings_themes">Tema</string>
-    <string name="settings_chiaro">Chiaro</string>
-    <string name="settings_scuro">Scuro</string>
     <string name="settings_app_version">Versione App</string>
     <string name="settings_version_number">1.0.0</string>
     <string name="settings_SendToFriends">Consiglia app agli amici</string>

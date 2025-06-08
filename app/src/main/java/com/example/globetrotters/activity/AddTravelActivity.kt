@@ -22,15 +22,24 @@ class AddTravelActivity : AppCompatActivity(),
     PhotoFragment.OnPhotoSelectedListener,
     DateFragment.OnDateSelectedListener {
 
+    // ViewModel per gestire i viaggi
     private lateinit var travelViewModel: TravelViewModel
+
+    // Uri della foto selezionata
     private var currentPhotoUri: Uri? = null
+
+    // Fragment per la selezione delle date
     private lateinit var dateFragment: DateFragment
+
+    // Coordinate della posizione selezionata
     private var selectedLatitude: Double? = null
     private var selectedLongitude: Double? = null
 
+    // Launcher per la selezione di coordinate dalla mappa
     private val mapSelectionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
+        // Controlla se l'utente ha selezionato coordinate nella mappa
         if (result.resultCode == RESULT_OK) {
             result.data?.let { data ->
                 selectedLatitude = data.getDoubleExtra("selected_latitude", Double.NaN)
@@ -54,21 +63,25 @@ class AddTravelActivity : AppCompatActivity(),
         travelViewModel = ViewModelProvider(this)
             .get(TravelViewModel::class.java)
 
+        // → Collega il fragment per la selezione delle date
         dateFragment = supportFragmentManager
             .findFragmentById(R.id.dateFragment) as DateFragment
 
+        // Recupera i riferimenti agli elementi UI
         val titleEditText = findViewById<EditText>(R.id.editTitle)
         val createButton = findViewById<Button>(R.id.createButton)
         val errorMessage = findViewById<TextView>(R.id.errorMessage)
         val locationButton = findViewById<Button>(R.id.locationButton)
 
+        // → Gestione click sul pulsante per selezionare la posizione
         locationButton.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("Seleziona la posizione")
                 .setItems(arrayOf("Posizione Attuale", "Scegli dalla mappa")) { _, which ->
                     when (which) {
-                        0 -> getCurrentLocation()
+                        0 -> getCurrentLocation() // → Ottieni posizione attuale
                         1 -> {
+                            // → Lancia la mappa per selezionare posizione
                             val intent = Intent(this, MapViewActivity::class.java).apply {
                                 putExtra("select_mode", true)
                             }
@@ -79,11 +92,13 @@ class AddTravelActivity : AppCompatActivity(),
                 .show()
         }
 
+        // → Gestione click sul pulsante di creazione del viaggio
         createButton.setOnClickListener {
             val title = titleEditText.text.toString().trim()
             val start = dateFragment.getStartDate()
             val end = dateFragment.getEndDate()
 
+            // → Controlli di validazione sul titolo e sulle date
             if (title.isEmpty()) {
                 errorMessage.text = "Il titolo non può essere vuoto"
                 errorMessage.visibility = TextView.VISIBLE
@@ -91,12 +106,11 @@ class AddTravelActivity : AppCompatActivity(),
                 errorMessage.text = "La data di fine non può essere precedente a quella di inizio"
                 errorMessage.visibility = TextView.VISIBLE
             } else {
-                val startDate = "${start.get(Calendar.DAY_OF_MONTH)}/${start.get(Calendar.MONTH) + 1}/${
-                    start.get(Calendar.YEAR)
-                }"
-                val endDate = "${end.get(Calendar.DAY_OF_MONTH)}/${end.get(Calendar.MONTH) + 1}/${
-                    end.get(Calendar.YEAR)
-                }"
+                // → Crea stringhe formattate per le date
+                val startDate = "${start.get(Calendar.DAY_OF_MONTH)}/${start.get(Calendar.MONTH) + 1}/${start.get(Calendar.YEAR)}"
+                val endDate = "${end.get(Calendar.DAY_OF_MONTH)}/${end.get(Calendar.MONTH) + 1}/${end.get(Calendar.YEAR)}"
+
+                // → Crea un nuovo oggetto TravelEntity
                 val travel = TravelEntity(
                     title = title,
                     dateRange = "$startDate - $endDate",
@@ -105,13 +119,16 @@ class AddTravelActivity : AppCompatActivity(),
                     longitude = selectedLongitude
                 )
 
-                // → Usa il ViewModel per inserire
+                // → Usa il ViewModel per salvare il viaggio nel database
                 travelViewModel.insertTravel(travel)
+
+                // → Chiudi l'activity e torna indietro
                 finish()
             }
         }
     }
 
+    // → Ottiene la posizione attuale dell'utente
     private fun getCurrentLocation() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         if (ActivityCompat.checkSelfPermission(
@@ -122,6 +139,8 @@ class AddTravelActivity : AppCompatActivity(),
             Toast.makeText(this, "Permesso posizione non concesso", Toast.LENGTH_LONG).show()
             return
         }
+
+        // → Recupera l'ultima posizione nota
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
                 selectedLatitude = location.latitude
@@ -137,11 +156,12 @@ class AddTravelActivity : AppCompatActivity(),
         }
     }
 
+    // → Callback quando viene selezionata una foto dal fragment
     override fun onPhotoUriSelected(uri: Uri) {
         currentPhotoUri = uri
     }
 
+    // → Callback quando vengono selezionate le date
     override fun onDatesSelected(start: Calendar, end: Calendar) {
-
     }
 }

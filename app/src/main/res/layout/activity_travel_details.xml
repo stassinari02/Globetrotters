@@ -132,11 +132,18 @@
         <!-- ● Bottone Meteo -->
         <Button
             android:id="@+id/openWeatherButton"
-            android:layout_width="118dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/details_logo_open_weather_width"
+            android:layout_height="@dimen/details_logo_open_weather_height"
             android:background="@drawable/logo_open_weather"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/details_openGalleryButton_marginTop" />
+
+        <ProgressBar
+            android:id="@+id/progressBarWiki"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
 
         <!-- ● Sezione note -->

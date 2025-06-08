@@ -30,8 +30,6 @@ import com.example.globetrotters.viewmodel.NoteViewModel
 import java.io.File
 import com.example.globetrotters.api.RetrofitInstance
 import kotlinx.coroutines.launch
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 

@@ -4,26 +4,18 @@
 
     <dimen name="main_page_padding">6dp</dimen>
     <dimen name="main_SuperTitle">45sp</dimen>
-
     <dimen name="main_FirstArea_marginTop">32dp</dimen>
     <dimen name="main_FirstArea_paddingStart_End">24dp</dimen>
-
     <dimen name="main_settingsIcon_width_height">30dp</dimen>
     <dimen name="main_title_size">35sp</dimen>
-
     <dimen name="main_SecondArea_marginTop">50dp</dimen>
     <dimen name="main_SecondArea_marginBottom">12dp</dimen>
-
     <dimen name="main_Search_padding">8dp</dimen>
-
     <dimen name="main_NewTravelButton_width">140dp</dimen>
     <dimen name="main_NewTravelButton_marginEnd">8dp</dimen>
-
     <dimen name="main_BinIcon_dimens">40dp</dimen>
-
     <dimen name="main_recyclerView_paddingTop">16dp</dimen>
     <dimen name="main_recyclerView_marginStartEnd">0dp</dimen>
-
     <dimen name="main_deleteMessage_padding">8dp</dimen>
 
     ------------------------------------------------------------------travel_item
@@ -32,32 +24,25 @@
     <dimen name="travel_cards_cornerRadius">16dp</dimen>
     <dimen name="travel_cards_padding">8dp</dimen>
     <dimen name="travel_cards_marginTop">10dp</dimen>
-
     <dimen name="travel_img_width">100dp</dimen>
     <dimen name="travel_img_marginEnd">16dp</dimen>
-
     <dimen name="travel_tripTitle_textsize">24sp</dimen>
     <dimen name="travel_tripDates_textsize">14sp</dimen>
 
     ---------------------------------------------------------------------activity_add_travel
 
     <dimen name="add_travel_padding">2dp</dimen>
-
     <dimen name="add_backArrow_dimens">48dp</dimen>
-
     <dimen name="add_title_min_height">48dp</dimen>
     <dimen name="add_title_paddingVertical">12dp</dimen>
-
     <dimen name="add_LocationButton_MarginTop">24dp</dimen>
     <dimen name="add_LocationButton_Elevation">6dp</dimen>
     <dimen name="add_LocationButton_PaddingOrizzontal">24dp</dimen>
     <dimen name="add_LocationButton_PaddingVertical">12dp</dimen>
-
     <dimen name="add_createButton_marginTop">8dp</dimen>
     <dimen name="add_createButton_marginBottom">4dp</dimen>
     <dimen name="add_createButton_padding">12dp</dimen>
     <dimen name="add_createButton_elevation">4dp</dimen>
-
     <dimen name="add_error_message_Paddingtop">8dp</dimen>
 
     ---------------------------------------------------------------activity_map_view
@@ -71,22 +56,16 @@
     ---------------------------------------------------------------activity_settings
 
     <dimen name="settings_backArrow_dimens">48dp</dimen>
-
     <dimen name="settings_title_marginBottom">5dp</dimen>
     <dimen name="settings_titleSize">35sp</dimen>
-
     <dimen name="settings_buttonPermission_marginTop">8dp</dimen>
-
     <dimen name="settings_themes_textSize">20sp</dimen>
     <dimen name="settings_themes_marginTop">32dp</dimen>
-
     <dimen name="settings_chiaro_scuro_padding">8dp</dimen>
     <dimen name="settings_chiaro_scuro_textSize">16sp</dimen>
     <dimen name="settings_chiaro_scuro_marginEnd">12dp</dimen>
     <dimen name="settings_chiaro_scuro_marginStart">12dp</dimen>
-
     <dimen name="settings_switch_minHeight">48dp</dimen>
-
     <dimen name="settings_app_version_textSize">20sp</dimen>
     <dimen name="settings_app_version_marginTop">32dp</dimen>
     <dimen name="settings_version_number_textSize">16sp</dimen>
@@ -98,15 +77,12 @@
     <dimen name="details_navBar_padding">16dp</dimen>
     <dimen name="details_backArrow_dimens">48dp</dimen>
     <dimen name="details_title_textSize">32sp</dimen>
-
-
     <dimen name="details_Buttons_padding">16dp</dimen>
     <dimen name="details_Buttons_marginTop">72dp</dimen>
     <dimen name="details_binIcon_dimens">24dp</dimen>
     <dimen name="details_binIcon_dimens_large">40dp</dimen>
     <dimen name="details_LoadPhotoButton_marginStart">16dp</dimen>
     <dimen name="details_binIcon_marginStart">16dp</dimen>
-
     <dimen name="details_photo_paddingAndMarginstart">8dp</dimen>
     <dimen name="details_photoSection_padding">12dp</dimen>
     <dimen name="details_photoSection_margin">16dp</dimen>
@@ -115,26 +91,23 @@
     <dimen name="details_recyclerView_height">136dp</dimen>
     <dimen name="details_recyclerView_padding">8dp</dimen>
     <dimen name="details_openGalleryButton_marginTop"></dimen>
-
     <dimen name="details_note_paddingTop">16dp</dimen>
     <dimen name="details_note_paddingBottom">16dp</dimen>
     <dimen name="details_searchNote_padding">8dp</dimen>
     <dimen name="details_addNote_paddingAndMarginStart">8dp</dimen>
     <dimen name="details_binIconNote_marginStart"></dimen>
-
     <dimen name="details_noteDeleteMessage_paddingAndMarginBottom">8dp</dimen>
     <dimen name="details_NoteRecyclerView_paddingTop">8dp</dimen>
     <dimen name="details_NoteRecyclerView_paddingBottom">16dp</dimen>
+    <dimen name="details_logo_open_weather_width">100dp</dimen>
+    <dimen name="details_logo_open_weather_height">48dp</dimen>
 
     ---------------------------------------------------------------activity_gallery
 
     <dimen name="gallery_navHeight">56dp</dimen>
     <dimen name="gallery_navPadding">8dp</dimen>
-
     <dimen name="gallery_backArrow_dimens">48dp</dimen>
-
     <dimen name="gallery_titleTextSize">24sp</dimen>
-
     <dimen name="gallery_binMessage_padding">8dp</dimen>
     <dimen name="gallery_binIcon_dimens">40dp</dimen>
     <dimen name="gallery_binIcon_MarginStart">6dp</dimen>
@@ -165,16 +138,13 @@
     ---------------------------------------------------------------fragments
 
     <dimen name="fragment_backArrow_padding">8dp</dimen>
-
     <dimen name="fragment_datePickers_marginTop">16dp</dimen>
     <dimen name="fragment_datePickers_width">200dp</dimen>
     <dimen name="fragment_datePickers_height">400dp</dimen>
     <dimen name="fragment_datePickers_padding">16dp</dimen>
-
     <dimen name="fragment_previewImg_dimens">150dp</dimen>
     <dimen name="fragment_previeImg_marginTop">12dp</dimen>
     <dimen name="fragment_previeImg_MarginBottom">16dp</dimen>
-
     <dimen name="fragment_Buttons_marginBetween">12dp</dimen>
 
 </resources>

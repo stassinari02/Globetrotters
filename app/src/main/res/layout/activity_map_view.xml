@@ -32,6 +32,4 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize" />
 
-    <!-- Pulsante di conferma selezione -->
-
 </FrameLayout>

@@ -9,8 +9,6 @@
     <color name="white">#FFFFFF</color>
     <color name="dark_green">#126800</color>
     <color name="red">#FE5442</color>
-
     <color name="main_Button_textColor">#1D1D1D </color>
-
     <color name="fragment_imgPreview_background">#9C9C9C</color>
 </resources>
