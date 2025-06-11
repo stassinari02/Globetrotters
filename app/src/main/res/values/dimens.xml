@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    ------------------------------------------------------------activity_main
+    -------------------------------------------------------------activity_main
 
     <dimen name="main_page_padding">6dp</dimen>
     <dimen name="main_SuperTitle">45sp</dimen>
