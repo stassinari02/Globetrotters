@@ -29,6 +29,8 @@ import com.example.globetrotters.viewmodel.PhotoViewModel
 import com.example.globetrotters.viewmodel.NoteViewModel
 import java.io.File
 import com.example.globetrotters.api.RetrofitInstance
+import com.example.globetrotters.viewmodel.WeatherViewModel
+import com.example.globetrotters.viewmodel.WikiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -46,6 +48,10 @@ class TravelDetailsActivity : AppCompatActivity() {
 
     private lateinit var photoViewModel: PhotoViewModel
     private lateinit var noteViewModel: NoteViewModel
+
+    private lateinit var wikiViewModel: WikiViewModel
+    private lateinit var weatherViewModel: WeatherViewModel
+
 
     private val takePhotoLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -75,6 +81,9 @@ class TravelDetailsActivity : AppCompatActivity() {
         photoViewModel = ViewModelProvider(this).get(PhotoViewModel::class.java)
         noteViewModel  = ViewModelProvider(this).get(NoteViewModel::class.java)
 
+        wikiViewModel    = ViewModelProvider(this).get(WikiViewModel::class.java)
+        weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+
         travelId = intent.getIntExtra("travel_id", 0)
         findViewById<TextView>(R.id.detailTitleTextView).text =
             intent.getStringExtra("travel_title").orEmpty()
@@ -92,27 +101,27 @@ class TravelDetailsActivity : AppCompatActivity() {
             })
         }
 
-        val wikipediaButton = findViewById<Button>(R.id.openWikipediaButton)
-        wikipediaButton.setOnClickListener {
+        findViewById<Button>(R.id.openWikipediaButton).setOnClickListener {
             val city = findViewById<TextView>(R.id.detailTitleTextView).text.toString().trim()
             if (city.isNotEmpty()) {
-                fetchWikipediaIntroRetrofit(city)
+                wikiViewModel.fetchIntro(city)
             } else {
                 Toast.makeText(this, "Titolo del viaggio non disponibile", Toast.LENGTH_SHORT).show()
             }
         }
 
-        val weatherButton = findViewById<Button>(R.id.openWeatherButton)
-        weatherButton.setOnClickListener {
+        findViewById<Button>(R.id.openWeatherButton).setOnClickListener {
             val city = findViewById<TextView>(R.id.detailTitleTextView).text.toString().trim()
             if (city.isNotEmpty()) {
-                fetchWeatherInfo(city)
+                val apiKey = getString(R.string.weather_api_key)
+                weatherViewModel.fetchCurrent(city, apiKey)
             } else {
                 Toast.makeText(this, "Titolo del viaggio non disponibile", Toast.LENGTH_SHORT).show()
             }
         }
 
-
+        setupWikiObserver()
+        setupWeatherObserver()
     }
 
     private fun setupPhotoSection() {
@@ -331,70 +340,48 @@ class TravelDetailsActivity : AppCompatActivity() {
         noteAdapter.setSelectionMode(false, null)
     }
 
-    private fun fetchWikipediaIntroRetrofit(city: String) {
-        lifecycleScope.launch {
-            try {
-                val response = RetrofitInstance.wikipediaApi.getIntroExtract(titles = city)
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    val pages = body?.query?.pages
-                    if (pages != null && pages.isNotEmpty()) {
-                        val page = pages.values.first()
-                        val extract = page.extract ?: "Nessuna informazione trovata."
-                        AlertDialog.Builder(this@TravelDetailsActivity)
-                            .setTitle(city)
-                            .setMessage(extract)
-                            .setPositiveButton("OK", null)
-                            .show()
-                    } else {
-                        Toast.makeText(this@TravelDetailsActivity, "Pagina non trovata", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(this@TravelDetailsActivity, "Errore API Wikipedia", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this@TravelDetailsActivity, "Errore: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+    private fun setupWikiObserver() {
+        wikiViewModel.extract.observe(this) { text ->
+            text?.let {
+                AlertDialog.Builder(this)
+                    .setTitle(findViewById<TextView>(R.id.detailTitleTextView).text)
+                    .setMessage(it)
+                    .setPositiveButton("OK", null)
+                    .show()
+                wikiViewModel.clear()
+            }
+        }
+        wikiViewModel.error.observe(this) { err ->
+            err?.let {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                wikiViewModel.clear()
             }
         }
     }
 
-    private fun fetchWeatherInfo(city: String) {
-        lifecycleScope.launch {
-            try {
-                val apiKey = getString(R.string.weather_api_key)
-                val response = RetrofitInstance.weatherApi.getCurrentWeather(cityName = city, apiKey = apiKey)
-
-                if (response.isSuccessful) {
-                    val weatherBody = response.body()
-                    val temp = weatherBody?.main?.temp ?: Double.NaN
-                    val humidity = weatherBody?.main?.humidity ?: -1
-                    val pressure = weatherBody?.main?.pressure ?: -1
-                    val windSpeed = weatherBody?.wind?.speed ?: Double.NaN
-                    val conditions = weatherBody?.weather?.firstOrNull()?.description ?: "N/A"
-
-                    val message = """
-                    Temperatura: $temp °C
-                    Condizioni: $conditions
-                    Umidità: $humidity %
-                    Pressione: $pressure hPa
-                    Vento: $windSpeed m/s
-                """.trimIndent()
-
-                    AlertDialog.Builder(this@TravelDetailsActivity)
-                        .setTitle("Meteo a $city")
-                        .setMessage(message)
-                        .setPositiveButton("OK", null)
-                        .show()
-                } else {
-                    Toast.makeText(this@TravelDetailsActivity, "Errore API Meteo", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: IOException) {
-                Toast.makeText(this@TravelDetailsActivity, "Errore di rete: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
-            } catch (e: HttpException) {
-                Toast.makeText(this@TravelDetailsActivity, "Errore HTTP: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                Toast.makeText(this@TravelDetailsActivity, "Errore: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
-            }
+    private fun setupWeatherObserver() {
+        weatherViewModel.weather.observe(this) { w ->
+            w?.let {
+                val msg = """
+        Temperatura: ${it.temp} °C
+        Condizioni: ${it.description}
+        Umidità: ${it.humidity} %
+        Pressione: ${it.pressure} hPa
+        Vento: ${it.windSpeed} m/s
+      """.trimIndent()
+                AlertDialog.Builder(this)
+                    .setTitle("Meteo a ${findViewById<TextView>(R.id.detailTitleTextView).text}")
+                    .setMessage(msg)
+                    .setPositiveButton("OK", null)
+                    .show()
+                weatherViewModel.clear()
             }
         }
+        weatherViewModel.error.observe(this) { err ->
+            err?.let {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                weatherViewModel.clear()
+            }
+        }
+    }
 }

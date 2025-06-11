@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/globetrotters/viewmodel/TravelViewModel.kt
 package com.example.globetrotters.viewmodel
 
 import android.app.Application
