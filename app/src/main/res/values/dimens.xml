@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    ------------------------------------------------------------activity_main
+    -------------------------------------------------------------activity_main
 
     <dimen name="main_page_padding">6dp</dimen>
     <dimen name="main_SuperTitle">45sp</dimen>
@@ -35,15 +35,19 @@
     <dimen name="add_backArrow_dimens">48dp</dimen>
     <dimen name="add_title_min_height">48dp</dimen>
     <dimen name="add_title_paddingVertical">12dp</dimen>
+    <dimen name="add_EditText_MarginTop">20dp</dimen>
     <dimen name="add_LocationButton_MarginTop">24dp</dimen>
     <dimen name="add_LocationButton_Elevation">6dp</dimen>
     <dimen name="add_LocationButton_PaddingOrizzontal">24dp</dimen>
     <dimen name="add_LocationButton_PaddingVertical">12dp</dimen>
+    <dimen name="add_FirstFragment_MarginTop">100dp</dimen>
+    <dimen name="add_SecondFragment_MarginTop">70dp</dimen>
     <dimen name="add_createButton_marginTop">8dp</dimen>
-    <dimen name="add_createButton_marginBottom">4dp</dimen>
+    <dimen name="add_createButton_marginBottom">70dp</dimen>
     <dimen name="add_createButton_padding">12dp</dimen>
     <dimen name="add_createButton_elevation">4dp</dimen>
     <dimen name="add_error_message_Paddingtop">8dp</dimen>
+    <dimen name="add_createButton_Margin">16dp</dimen>
 
     ---------------------------------------------------------------activity_map_view
 

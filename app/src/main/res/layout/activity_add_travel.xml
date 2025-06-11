@@ -1,103 +1,109 @@
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fillViewport="true"
-    android:background="@android:color/white"
-    android:clipToPadding="false">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/add_travel_padding">
+    <!-- Contenuto Scrollable -->
+    <ScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/createButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Freccia Indietro -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/add_travel_padding">
 
+            <!-- Freccia Indietro -->
             <fragment
                 android:id="@+id/backArrowFragment"
                 android:name="com.example.globetrotters.fragments.BackArrowFragment"
                 android:layout_width="@dimen/add_backArrow_dimens"
                 android:layout_height="@dimen/add_backArrow_dimens" />
 
-        </LinearLayout>
-
-        <!-- Bottone Aggiungi Posizione -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/add_LocationButton_MarginTop">
-
-            <Button
-                android:id="@+id/locationButton"
-                android:layout_width="wrap_content"
+            <!-- Bottone Aggiungi Posizione -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_green"
-                android:elevation="@dimen/add_LocationButton_Elevation"
-                android:paddingHorizontal="@dimen/add_LocationButton_PaddingOrizzontal"
-                android:paddingVertical="@dimen/add_LocationButton_PaddingVertical"
-                android:text="@string/dialog_ButtonPosition"
-                android:textColor="@android:color/white" />
+                android:gravity="center"
+                android:layout_marginTop="@dimen/add_LocationButton_MarginTop">
 
+                <Button
+                    android:id="@+id/locationButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/dark_green"
+                    android:elevation="@dimen/add_LocationButton_Elevation"
+                    android:paddingHorizontal="@dimen/add_LocationButton_PaddingOrizzontal"
+                    android:paddingVertical="@dimen/add_LocationButton_PaddingVertical"
+                    android:text="@string/dialog_ButtonPosition"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <!-- Titolo Vacanza -->
+            <EditText
+                android:id="@+id/editTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/add_title_min_height"
+                android:hint="@string/dialog_chooseTitle"
+                android:paddingVertical="@dimen/add_title_paddingVertical"
+                android:layout_marginTop="@dimen/add_EditText_MarginTop"/>
+
+            <!-- Frammenti Foto e Date -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <fragment
+                    android:id="@+id/photoFragment"
+                    android:name="com.example.globetrotters.fragments.PhotoFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_FirstFragment_MarginTop"/>
+
+                <fragment
+                    android:id="@+id/dateFragment"
+                    android:name="com.example.globetrotters.fragments.DateFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_SecondFragment_MarginTop"/>
+            </LinearLayout>
+
+            <!-- Messaggio di errore -->
+            <TextView
+                android:id="@+id/errorMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_errorMessage"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone"
+                android:paddingTop="@dimen/add_error_message_Paddingtop"
+                android:textAlignment="center" />
         </LinearLayout>
+    </ScrollView>
 
-        <!-- Titolo Vacanza -->
-        <EditText
-            android:id="@+id/editTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/add_title_min_height"
-            android:hint="@string/dialog_chooseTitle"
-            android:paddingVertical="@dimen/add_title_paddingVertical" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-
-            <fragment
-                android:id="@+id/photoFragment"
-                android:name="com.example.globetrotters.fragments.PhotoFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <fragment
-                android:id="@+id/dateFragment"
-                android:name="com.example.globetrotters.fragments.DateFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <!-- Messaggio di errore -->
-        <TextView
-            android:id="@+id/errorMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_errorMessage"
-            android:textColor="@android:color/holo_red_dark"
-            android:visibility="gone"
-            android:paddingTop="@dimen/add_error_message_Paddingtop"
-            android:textAlignment="center" />
-
-        <!-- Bottone Crea -->
-        <Button
-            android:id="@+id/createButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_createButton"
-            android:textColor="@android:color/black"
-            android:background="@color/fragment_imgPreview_background"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/add_createButton_marginTop"
-            android:layout_marginBottom="@dimen/add_createButton_marginBottom"
-            android:padding="@dimen/add_createButton_padding"
-            android:elevation="@dimen/add_createButton_elevation" />
-
-    </LinearLayout>
-</ScrollView>
+    <Button
+        android:id="@+id/createButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/add_createButton_marginBottom"
+        android:background="@color/fragment_imgPreview_background"
+        android:padding="@dimen/add_createButton_padding"
+        android:elevation="@dimen/add_createButton_elevation"
+        android:text="@string/dialog_createButton"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
